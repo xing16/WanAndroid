@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="#fff"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/iv_project_img"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/iv_project_img"
+        android:orientation="vertical"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/tv_project_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black_333"
+            android:textSize="20sp"
+            tools:text="这是我的第一个开源完整项目这是我的第一个开源完整项目这是我的第一个开源完整项目" />
+
+        <TextView
+            android:id="@+id/tv_project_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/black_999"
+            android:textSize="14sp"
+            tools:text="2013-09-0 star.tao" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

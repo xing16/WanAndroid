@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.xing.wanandroid"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "icon_menu_home.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':common_base')
+    if (!isRunAlone.toBoolean()) {
+        implementation project(':module_usercenter')
+        implementation project(':module_main')
+    }
+    // 如果 app 主工程中使用了 Arouter 注解，那就需要这个 annotationProcessor
+    annotationProcessor rootProject.ext.dependencies['arouter-compiler']
+}

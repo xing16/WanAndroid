@@ -1,0 +1,1 @@
+include ':app', ':common_base', ':module_usercenter', ':module_main'

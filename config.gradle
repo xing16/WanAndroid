@@ -1,0 +1,43 @@
+/**
+ 引用步骤：
+ (1) 在 project 下的 build.gradle 文件第一行添加 apply from : "config.gradle"
+ (2) 在各个 module 中用 implemetions rootProject.ext.dependencies['xxx'] 和 annotationProcessor rootProject.ext..dependencies['xxx']
+ **/
+ext {
+    android = [
+            applicationId    : 'com.xing.wanandroid',
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            minSdkVersion    : 15,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+    dependencies = [
+            // support
+            "appcompat-v7"           : "com.android.support:appcompat-v7:28.0.0",
+            "design"                 : "com.android.support:design:28.0.0",
+            "support-v4"             : "com.android.support:support-v4:28.0.0",
+            "cardview-v7"            : "com.android.support:cardview-v7:28.0.0",
+            "annotations"            : "com.android.support:support-annotations:28.0.0",
+            "recyclerview-v7"        : "com.android.support:recyclerview-v7:28.0.0",
+            "gson"                   : "com.google.code.gson:gson:2.2.4",
+            "butterknife"            : "com.jakewharton:butterknife:8.8.1",
+            "butterknife-compiler"   : "com.jakewharton:butterknife-compiler:8.8.1",
+            "constraint-layout"      : "com.android.support.constraint:constraint-layout:1.1.3",
+            "retrofit"               : "com.squareup.retrofit2:retrofit:2.4.0",
+            "rxandroid"              : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            "rxjava"                 : "io.reactivex.rxjava2:rxjava:2.2.2",
+            "converter-gson"         : "com.squareup.retrofit2:converter-gson:2.4.0",
+            "adapter-rxjava"         : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            "okhttp"                 : "com.squareup.okhttp3:okhttp:3.11.0",
+            "logging-interceptor"    : "com.squareup.okhttp3:logging-interceptor:3.11.0",
+            "arouter-api"            : "com.alibaba:arouter-api:1.4.1",
+            "arouter-compiler"       : "com.alibaba:arouter-compiler:1.2.2",
+            "fastjson"               : "com.alibaba:fastjson:1.1.70.android",
+            "glide"                  : "com.github.bumptech.glide:glide:4.9.0",
+            "glide-compiler"         : "com.github.bumptech.glide:compiler:4.9.0",
+            "recycler-adapter-helper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30"
+    ]
+}

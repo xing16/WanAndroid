@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xing.usercenter">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--作为单独组件时，需要配置 application name 和程序入口-->
+    <application
+        android:name="com.xing.usercenter.app.UserCenterApplication"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
