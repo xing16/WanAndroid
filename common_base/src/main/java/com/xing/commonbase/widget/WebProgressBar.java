@@ -26,7 +26,7 @@ public class WebProgressBar extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(height);
         paint.setAntiAlias(true);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.parseColor("#ff616161"));
     }
 
     /**

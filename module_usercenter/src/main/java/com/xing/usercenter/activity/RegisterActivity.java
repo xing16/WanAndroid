@@ -6,30 +6,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.module.usercenter.R;
-import com.xing.module.usercenter.R2;
 import com.xing.usercenter.bean.RegisterResult;
 import com.xing.usercenter.contract.RegisterContract;
 import com.xing.usercenter.presenter.RegisterPresenter;
 
-import butterknife.BindView;
-
+@Route(path = "/user/RegisterActivity")
 public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
         implements RegisterContract.View {
-    @BindView(R2.id.et_register_username)
     EditText usernameEditText;
-    @BindView(R2.id.et_register_password)
     EditText passwordEditText;
-    @BindView(R2.id.et_register_repassword)
     EditText repasswordEditText;
-    @BindView(R2.id.btn_register)
     Button registerBtn;
-
+    private View backView;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_register;
+    }
+
+    @Override
+    protected void initView() {
+        usernameEditText = findViewById(R.id.et_register_username);
+        passwordEditText = findViewById(R.id.et_register_password);
+        repasswordEditText = findViewById(R.id.et_register_repassword);
+        registerBtn = findViewById(R.id.btn_register);
+        backView = findViewById(R.id.layout_register_back);
     }
 
     @Override
@@ -38,8 +42,8 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
     }
 
     @Override
-    protected void init() {
-        super.init();
+    protected void initData() {
+        super.initData();
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,13 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
                     return;
                 }
                 presenter.register(username, password, repassword);
+            }
+        });
+
+        backView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

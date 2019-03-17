@@ -7,11 +7,12 @@
     android:background="@color/gray_f5"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_register"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/colorPrimary"
+        android:elevation="4dp"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include
@@ -27,7 +28,7 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>
 
 
     <LinearLayout

@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xing.commonbase">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
         <activity
-            android:name=".WebViewActivity"
+            android:name=".activity.WebViewActivity"
             android:launchMode="singleTop">
         </activity>
     </application>

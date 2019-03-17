@@ -1,6 +1,5 @@
 package com.xing.usercenter.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
@@ -18,29 +17,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xing.commonbase.base.BaseMVPActivity;
+import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.util.SoftKeyboardUtil;
 import com.xing.module.usercenter.R;
-import com.xing.module.usercenter.R2;
 import com.xing.usercenter.bean.LoginResult;
 import com.xing.usercenter.contract.LoginContract;
 import com.xing.usercenter.presenter.LoginPresenter;
 
-import butterknife.BindView;
-
+@Route(path = "/user/LoginActivity")
 public class LoginActivity extends BaseMVPActivity<LoginPresenter>
         implements LoginContract.View, View.OnClickListener {
 
-    @BindView(R2.id.btn_login)
     Button loginBtn;
-    @BindView(R2.id.tv_register)
     TextView registerTxtView;
-    @BindView(R2.id.cb_login_pwd_visible)
     CheckBox pwdVisibleCheckBox;
-    @BindView(R2.id.et_login_username)
     EditText usernameEditText;
-    @BindView(R2.id.et_login_password)
     EditText passwordEditText;
 
     @Override
@@ -57,20 +51,28 @@ public class LoginActivity extends BaseMVPActivity<LoginPresenter>
     }
 
     @Override
+    protected void initView() {
+        loginBtn = findViewById(R.id.btn_login);
+        registerTxtView = findViewById(R.id.tv_register);
+        pwdVisibleCheckBox = findViewById(R.id.cb_login_pwd_visible);
+        usernameEditText = findViewById(R.id.et_login_username);
+        passwordEditText = findViewById(R.id.et_login_password);
+    }
+
+    @Override
     protected LoginPresenter createPresenter() {
         return new LoginPresenter();
     }
 
-
     @Override
-    protected void init() {
-        super.init();
+    protected void initData() {
+        super.initData();
         // 添加下划线
         registerTxtView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-//        String cacheUsername = presenter.readUsernamePassword(Constants.USERNAME);
-//        String cachePassword = presenter.readUsernamePassword(Constants.PASSWORD);
-        String cacheUsername = "xing123456";
-        String cachePassword = "123456";
+        String cacheUsername = presenter.readUsernamePassword(Constants.USERNAME);
+        String cachePassword = presenter.readUsernamePassword(Constants.PASSWORD);
+//        String cacheUsername = "xing2019";
+//        String cachePassword = "123456";
         usernameEditText.setText(cacheUsername);
         usernameEditText.setSelection(cacheUsername.length());
         passwordEditText.setText(cachePassword);
@@ -115,6 +117,7 @@ public class LoginActivity extends BaseMVPActivity<LoginPresenter>
 
     /**
      * 开始登陆
+     * xing2019 / 123456
      */
     private void login() {
         String username = usernameEditText.getText().toString().trim();
@@ -144,15 +147,14 @@ public class LoginActivity extends BaseMVPActivity<LoginPresenter>
      * 跳转注册页面
      */
     private void gotoRegisterActivity() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        ARouter.getInstance().build("/user/RegisterActivity").navigation();
     }
 
     /**
      * 跳转主界面
      */
     private void gotoMainActivity() {
-        ARouter.getInstance().build("/main/activity").navigation();
+        ARouter.getInstance().build("/main/MainActivity").navigation();
         finish();
     }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">common_base</string>
+    <string name="favorite">收藏</string>
 </resources>

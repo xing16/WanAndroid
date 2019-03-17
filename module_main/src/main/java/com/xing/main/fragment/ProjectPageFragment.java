@@ -7,10 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.xing.commonbase.WebViewActivity;
 import com.xing.commonbase.base.BaseLazyFragment;
-import com.xing.commonbase.util.IntentUtil;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
 import com.xing.main.adapter.ProjectRecyclerAdapter;
@@ -74,7 +73,7 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 //                .itemOffsets(10, 10)   // 10dp
                 .height(0.8f)    // 0.5dp
                 .color(Color.parseColor("#aacccccc"))  // color 的 int 值，不是 R.color 中的值
-                .margin(10, 10);  // 10dp
+                .margin(12, 12);  // 12dp
         recyclerView.addItemDecoration(itemDecoration);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -122,6 +121,9 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
     private void gotoWebViewActivity(String url) {
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
-        IntentUtil.startActivity(mContext, WebViewActivity.class, bundle);
+        ARouter.getInstance()
+                .build("/web/WebViewActivity")
+                .with(bundle)
+                .navigation();
     }
 }

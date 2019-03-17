@@ -26,6 +26,7 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMainActivity() {
         ARouter.getInstance().build("/main/MainActivity").navigation();
+//        ARouter.getInstance().build("/user/LoginActivity").navigation();
         finish();
     }
 }

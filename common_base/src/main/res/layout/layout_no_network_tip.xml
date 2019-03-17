@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ccf40b0b"
+        android:padding="8dp"
+        android:text="网络连接异常，请检查您的网络设置！"
+        android:textColor="#eee"
+        android:textSize="16sp" />
+
+</LinearLayout>

@@ -44,9 +44,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/selector_menu_project"
             android:gravity="center"
             android:text="项目"
-            android:drawableTop="@drawable/selector_menu_project"
             android:textSize="10sp" />
 
 
@@ -55,8 +55,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/selector_menu_system"
             android:button="@null"
+            android:drawableTop="@drawable/selector_menu_system"
             android:gravity="center"
             android:text="体系"
             android:textSize="10sp" />
@@ -68,9 +68,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/selector_menu_mine"
             android:gravity="center"
             android:text="我的"
-            android:drawableTop="@drawable/selector_menu_mine"
             android:textSize="10sp" />
 
     </RadioGroup>

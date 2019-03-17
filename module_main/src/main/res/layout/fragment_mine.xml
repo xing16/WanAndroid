@@ -1,14 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.MineFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.xing.commonbase.widget.ZoomScrollView
+        android:id="@+id/sv_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="MineFragment" />
+        android:background="#f5f5f5">
 
-</FrameLayout>
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_avatar_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/test" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="140dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp">
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/shape_circle_white" />
+
+                    <com.xing.commonbase.widget.CircleImageView
+                        android:id="@+id/civ_avatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/shape_circle_white"
+                        android:padding="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/test" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="120dp"
+                        android:text="昵称"
+                        android:textColor="@color/black_333"
+                        android:textSize="20sp" />
+                </FrameLayout>
+            </FrameLayout>
+
+
+            <!--颜色 515151-->
+            <TextView
+                android:id="@+id/item_mine_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <!--颜色 515151-->
+            <TextView
+                android:id="@+id/item_mine_favorite1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <!--颜色 515151-->
+            <TextView
+                android:id="@+id/item_mine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" /> <!--颜色 515151-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawableLeft="@drawable/ic_mine_favorite"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/favorite"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </com.xing.commonbase.widget.ZoomScrollView>
+
+    <!--  标题栏  -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@android:color/white"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的"
+            android:textColor="@color/black_333"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_favorite" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+

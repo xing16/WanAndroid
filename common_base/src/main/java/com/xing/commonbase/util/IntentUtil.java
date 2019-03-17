@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class IntentUtil {
     private IntentUtil() {
-
+        throw new UnsupportedOperationException("cannot be instantiated");
     }
 
     public static void startActivity(Context context, Class clazz) {

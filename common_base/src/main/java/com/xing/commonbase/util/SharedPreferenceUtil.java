@@ -8,6 +8,7 @@ import com.xing.commonbase.base.BaseApplication;
 public class SharedPreferenceUtil {
 
     private SharedPreferenceUtil() {
+        throw new UnsupportedOperationException("cannot be instantiated");
     }
 
     public static void write(String name, String key, Object value) {
