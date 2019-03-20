@@ -57,4 +57,5 @@ dependencies {
     // arouter
     api rootProject.ext.dependencies['arouter-api']
     annotationProcessor rootProject.ext.dependencies['arouter-compiler']
+    api rootProject.ext.dependencies['banner']
 }

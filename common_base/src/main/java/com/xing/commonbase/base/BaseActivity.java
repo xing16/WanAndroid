@@ -3,8 +3,11 @@ package com.xing.commonbase.base;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
 
 import com.xing.commonbase.receiver.NetworkChangeReceiver;
 
@@ -18,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
         mContext = this;
+//        StatusBarUtil.setColor(this, getResources().getColor(android.R.color.white));
         registerNetworkChangeReceiver();
         initView();
         initData();
@@ -37,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void registerNetworkChangeReceiver() {
         receiver = new NetworkChangeReceiver(this);
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiver,filter);
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -48,5 +52,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             receiver.onDestroy();
             receiver = null;
         }
+    }
+
+    public void setStatusBarTextColor(Window window, boolean lightStatusBar) {
+        // 设置状态栏字体颜色 白色与深色
+        View decor = window.getDecorView();
+        int ui = decor.getSystemUiVisibility();
+        ui |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (lightStatusBar) {
+                ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            } else {
+                ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            }
+        }
+        decor.setSystemUiVisibility(ui);
     }
 }

@@ -1,6 +1,8 @@
 package com.xing.main.apiservice;
 
 import com.xing.commonbase.base.BaseResponse;
+import com.xing.main.bean.BannerResult;
+import com.xing.main.bean.HomeArticleResult;
 import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
 
@@ -14,7 +16,21 @@ import retrofit2.http.Query;
 public interface MainApiService {
 
     /**
+     * 获取首页 banner 数据
+     *
+     * @return
+     */
+    @GET("banner/json")
+    Observable<BaseResponse<List<BannerResult>>> getBanner();
+
+
+    @GET("article/list/{page}/json")
+    Observable<BaseResponse<HomeArticleResult>> getHomeArticles(@Path("page") int page);
+
+
+    /**
      * Project 指定栏目下的列表
+     *
      * @param page
      * @param id
      * @return
@@ -24,6 +40,7 @@ public interface MainApiService {
 
     /**
      * Project 栏目分类
+     *
      * @return
      */
     @GET("project/tree/json")

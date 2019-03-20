@@ -13,6 +13,8 @@ import android.widget.ScrollView;
 import com.xing.commonbase.R;
 
 public class ZoomScrollView extends ScrollView {
+
+    private static final String TAG = "ZoomScrollView";
     /**
      * 要放大的目标控件
      */
@@ -37,9 +39,16 @@ public class ZoomScrollView extends ScrollView {
     public ZoomScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         readAttrs(context, attrs);
+        setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
+    /**
+     * 注入要缩放的 View
+     *
+     * @param targetView
+     */
     public void setZoomView(View targetView) {
+        Log.e(TAG, "setZoomView: ");
         this.zoomView = targetView;
     }
 
@@ -50,18 +59,10 @@ public class ZoomScrollView extends ScrollView {
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        setOverScrollMode(OVER_SCROLL_NEVER);
-
-    }
-
-    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        Log.e(TAG, "onSizeChanged: ");
 
-        zoomViewWidth = zoomView.getMeasuredWidth();
-        zoomViewHeight = zoomView.getMeasuredHeight();
     }
 
     @Override
@@ -74,6 +75,10 @@ public class ZoomScrollView extends ScrollView {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        if (zoomViewWidth == 0 || zoomViewHeight == 0) {
+            zoomViewWidth = zoomView.getMeasuredWidth();
+            zoomViewHeight = zoomView.getMeasuredHeight();
+        }
         switch (ev.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 if (!scaling) {
@@ -85,6 +90,9 @@ public class ZoomScrollView extends ScrollView {
                 }
                 float distance = (ev.getY() - downY) * scaleRadio;
                 if (distance < 0) {   // 上拉
+                    break;
+                }
+                if(distance > zoomMax) {
                     break;
                 }
                 scaling = true;

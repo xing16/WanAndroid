@@ -15,6 +15,7 @@ public class MineFragment extends BaseFragment {
 
     private ImageView backImgView;
     private ZoomScrollView scrollView;
+    private View avatarLayout;
 
     public MineFragment() {
     }
@@ -28,6 +29,7 @@ public class MineFragment extends BaseFragment {
     protected void initView(View rootView) {
         backImgView = rootView.findViewById(R.id.iv_avatar_background);
         scrollView = rootView.findViewById(R.id.sv_scroll);
+//        avatarLayout = rootView.findViewById(R.id.rl_layout);
     }
 
     @Override

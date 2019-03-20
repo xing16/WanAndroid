@@ -57,7 +57,7 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_home_page;
+        return R.layout.fragment_project_page;
     }
 
     @Override

@@ -1,17 +1,14 @@
 package com.xing.main.activity;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseActivity;
+import com.xing.commonbase.util.StatusBarUtil;
 import com.xing.main.R;
 import com.xing.main.fragment.HomeFragment;
 import com.xing.main.fragment.MineFragment;
@@ -34,18 +31,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(Color.WHITE);
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
-        }
         return R.layout.activity_main;
     }
 
     @Override
     protected void initView() {
+        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
         radioGroup = findViewById(R.id.rg_radio_group);
         homeRadioButton = findViewById(R.id.rb_home);
         mineRadioButton = findViewById(R.id.rb_mine);
