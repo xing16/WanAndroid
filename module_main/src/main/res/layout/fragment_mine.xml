@@ -76,17 +76,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:ellipsize="end"
                         android:layout_marginTop="5dp"
+                        android:ellipsize="end"
                         android:text="做出成绩来，全世界都会和颜悦色。"
                         android:textColor="@color/black_999"
                         android:textSize="14sp" />
 
-
-
-
                 </LinearLayout>
-
 
             </RelativeLayout>
 
@@ -94,14 +90,14 @@
                 android:id="@+id/item_mine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@android:color/white"
                 android:drawableLeft="@drawable/ic_mine_favorite"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="@string/favorite"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black_333"
                 android:textSize="18sp" />
 
             <!--颜色 515151-->
@@ -109,14 +105,13 @@
                 android:id="@+id/item_mine_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:background="@android:color/white"
                 android:drawableLeft="@drawable/ic_mine_favorite"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="@string/favorite"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black_333"
                 android:textSize="18sp" />
 
             <!--颜色 515151-->
@@ -130,7 +125,7 @@
                 android:gravity="center_vertical"
                 android:padding="15dp"
                 android:text="@string/favorite"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black_333"
                 android:textSize="18sp" />
 
             <!--颜色 515151-->
@@ -143,75 +138,9 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
+                android:text="关于"
+                android:textColor="@color/black_333"
                 android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" /> <!--颜色 515151-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
 
         </LinearLayout>
 

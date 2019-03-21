@@ -16,12 +16,12 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        new Handler().postDelayed(new Runnable() {
+        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 gotoMainActivity();
             }
-        }, 2000);
+        });
     }
 
     private void gotoMainActivity() {

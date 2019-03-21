@@ -22,6 +22,7 @@ public class HomeArticleAdapter extends BaseQuickAdapter<HomeArticleResult.Datas
     @Override
     protected void convert(BaseViewHolder helper, HomeArticleResult.DatasBean item) {
         helper.setText(R.id.tv_article_title, item.getTitle())
-                .setText(R.id.tv_article_author, item.getAuthor());
+                .setText(R.id.tv_article_author, item.getAuthor())
+                .setText(R.id.tv_article_time, item.getNiceDate());
     }
 }
