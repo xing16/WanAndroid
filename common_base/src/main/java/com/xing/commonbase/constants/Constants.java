@@ -21,4 +21,6 @@ public class Constants {
     public static final String URL = "url";
     public static final String ID = "id";
     public static final String SIGNATURE = "signature";
+
+    public static  final String KEY_WORD = "key_word";
 }

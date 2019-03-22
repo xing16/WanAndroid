@@ -3,14 +3,19 @@ package com.xing.main.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xing.commonbase.base.BaseMVPFragment;
+import com.xing.commonbase.util.StatusBarUtil;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
 import com.xing.main.adapter.HomeArticleAdapter;
@@ -25,14 +30,18 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends BaseMVPFragment<HomePresenter> implements HomeContract.View {
+public class HomeFragment extends BaseMVPFragment<HomePresenter> implements HomeContract.View, View.OnClickListener {
 
+    private static final String TAG = "HomeFragment";
     private Banner banner;
     private RecyclerView recyclerView;
     private int page = 0;
     private HomeArticleAdapter homeArticleAdapter;
     private List<HomeArticleResult.DatasBean> dataList = new ArrayList<>();
     private View headerView;
+    private View searchLayoutView;
+    private TextView loginTxtView;
+    private TextView searchTxtView;
 
     public HomeFragment() {
     }
@@ -57,12 +66,17 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
     @Override
     protected void initView(View rootView) {
         recyclerView = rootView.findViewById(R.id.rv_home);
+        searchLayoutView = rootView.findViewById(R.id.rl_search_header);
+        loginTxtView = rootView.findViewById(R.id.tv_home_login);
+        searchTxtView = rootView.findViewById(R.id.tv_home_search);
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_header, null);
         banner = headerView.findViewById(R.id.banner_home);
     }
 
     @Override
     protected void initData() {
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) searchLayoutView.getLayoutParams();
+        lp.topMargin = StatusBarUtil.getStatusBarHeight(mContext);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
@@ -78,6 +92,27 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
 
         // 请求首页文章列表
         presenter.getHomeArticles(page);
+
+        setListener();
+    }
+
+    private void setListener() {
+        loginTxtView.setOnClickListener(this);
+        searchTxtView.setOnClickListener(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int scollYDistance = getScollYDistance();
+                Log.e(TAG, "onScrolled: " + scollYDistance);
+//                searchLayoutView.setAlpha(scollYDistance / 40);
+            }
+        });
     }
 
     @Override
@@ -169,5 +204,35 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             }
         }
         return list;
+    }
+
+
+    public int getScollYDistance() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int position = layoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = layoutManager.findViewByPosition(position);
+        int itemHeight = firstVisiableChildView.getHeight();
+        return (position) * itemHeight - firstVisiableChildView.getTop();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tv_home_login) {
+            gotoLoginActivity();
+        } else if (v.getId() == R.id.tv_home_search) {
+            gotoSearchActivity();
+        }
+    }
+
+    private void gotoSearchActivity() {
+        ARouter.getInstance()
+                .build("/search/SearchActivity")
+                .navigation();
+    }
+
+    private void gotoLoginActivity() {
+        ARouter.getInstance()
+                .build("/user/LoginActivity")
+                .navigation();
     }
 }
