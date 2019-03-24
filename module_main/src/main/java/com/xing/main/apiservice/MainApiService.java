@@ -5,11 +5,15 @@ import com.xing.main.bean.BannerResult;
 import com.xing.main.bean.HomeArticleResult;
 import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
+import com.xing.main.bean.SearchResult;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -24,8 +28,25 @@ public interface MainApiService {
     Observable<BaseResponse<List<BannerResult>>> getBanner();
 
 
+    /**
+     * 获取首页文章列表
+     *
+     * @param page
+     * @return
+     */
     @GET("article/list/{page}/json")
     Observable<BaseResponse<HomeArticleResult>> getHomeArticles(@Path("page") int page);
+
+
+    /**
+     * 搜索
+     *
+     * @param page
+     * @return
+     */
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    Observable<BaseResponse<SearchResult>> getSearchResult(@Path("page") int page, @Field("k") String keyword);
 
 
     /**

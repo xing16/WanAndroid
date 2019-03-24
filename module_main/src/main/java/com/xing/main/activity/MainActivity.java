@@ -1,5 +1,6 @@
 package com.xing.main.activity;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+        setStatusBarTransparent();
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
         radioGroup = findViewById(R.id.rg_radio_group);
         homeRadioButton = findViewById(R.id.rb_home);
@@ -109,5 +110,14 @@ public class MainActivity extends BaseActivity {
             }
         }
         ft.commit();
+    }
+
+
+    public void setStatusBarTransparent() {
+        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+    }
+
+    public void setStatusBarWhite() {
+        StatusBarUtil.setColor(this, Color.WHITE);
     }
 }

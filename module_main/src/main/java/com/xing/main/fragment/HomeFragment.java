@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.xing.commonbase.base.BaseMVPFragment;
 import com.xing.commonbase.util.StatusBarUtil;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
+import com.xing.main.activity.MainActivity;
 import com.xing.main.adapter.HomeArticleAdapter;
 import com.xing.main.bean.BannerResult;
 import com.xing.main.bean.HomeArticleResult;
@@ -42,6 +44,10 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
     private View searchLayoutView;
     private TextView loginTxtView;
     private TextView searchTxtView;
+    private ImageView logoImgView;
+    private int bannerHeight;
+    private LinearLayoutManager linearLayoutManager;
+    private int searchLayoutHeight;
 
     public HomeFragment() {
     }
@@ -65,19 +71,38 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
 
     @Override
     protected void initView(View rootView) {
+        logoImgView = rootView.findViewById(R.id.iv_home_logo);
         recyclerView = rootView.findViewById(R.id.rv_home);
         searchLayoutView = rootView.findViewById(R.id.rl_search_header);
         loginTxtView = rootView.findViewById(R.id.tv_home_login);
         searchTxtView = rootView.findViewById(R.id.tv_home_search);
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_header, null);
         banner = headerView.findViewById(R.id.banner_home);
+        float a = 1f;
+
+
+//        if (background instanceof ColorDrawable) {
+//            int color = ((ColorDrawable) background).getColor();
+//            Log.e(TAG, "initView: color = " + color);
+//            color &
+//            int red = color >> 16 & 0xff;
+//            int green = color >> 8 & 0xff;
+//            int blue = color & 0xff;
+//            red = (int) (red * a + 0.5);
+//            green = (int) (green * a + 0.5);
+//            blue = (int) (blue * a + 0.5);
+//            int finalColor = 0xff << 24 | red << 16 | green << 8 | blue;
+//            searchLayoutView.setBackgroundColor(finalColor);
+//
+//        }
     }
 
     @Override
     protected void initData() {
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) searchLayoutView.getLayoutParams();
         lp.topMargin = StatusBarUtil.getStatusBarHeight(mContext);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
 //                .itemOffsets(10, 10)   // 10dp
@@ -92,13 +117,13 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
 
         // 请求首页文章列表
         presenter.getHomeArticles(page);
-
         setListener();
     }
 
     private void setListener() {
         loginTxtView.setOnClickListener(this);
         searchTxtView.setOnClickListener(this);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -108,11 +133,35 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int scollYDistance = getScollYDistance();
-                Log.e(TAG, "onScrolled: " + scollYDistance);
-//                searchLayoutView.setAlpha(scollYDistance / 40);
+                int scrollOffset = recyclerView.computeVerticalScrollOffset();
+                setSearchLayoutAlpha(scrollOffset);
             }
         });
+    }
+
+    private void setSearchLayoutAlpha(int offset) {
+        if (searchLayoutHeight == 0) {
+            searchLayoutHeight = searchLayoutView.getMeasuredHeight();
+        }
+        if (bannerHeight == 0) {
+            bannerHeight = banner.getMeasuredHeight();
+        }
+        int maxOffset = bannerHeight - StatusBarUtil.getStatusBarHeight(mContext) - searchLayoutHeight;
+        Log.e(TAG, "offset: " + offset + ", maxOffset = " + maxOffset);
+        if (offset <= maxOffset) {
+            float percent = offset * 1.0f / maxOffset;
+            Log.e(TAG, "setSearchLayoutAlpha: percent = " + percent);
+            searchLayoutView.getBackground().mutate().setAlpha((int) (255 * percent));
+            loginTxtView.setTextColor(getResources().getColor(android.R.color.white));
+            logoImgView.setImageResource(R.drawable.ic_home_logo_white);
+            searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input));
+            ((MainActivity)getActivity()).setStatusBarTransparent();
+        } else {
+            loginTxtView.setTextColor(getResources().getColor(R.color.colorAccent));
+            logoImgView.setImageResource(R.drawable.ic_home_logo_black);
+            searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input_dark));
+            ((MainActivity)getActivity()).setStatusBarWhite();
+        }
     }
 
     @Override
