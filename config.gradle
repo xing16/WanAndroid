@@ -39,7 +39,7 @@ ext {
             "glide"                  : "com.github.bumptech.glide:glide:4.9.0",
             "glide-compiler"         : "com.github.bumptech.glide:compiler:4.9.0",
             "recycler-adapter-helper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
-            "banner"                 : "com.youth.banner:banner:1.4.10"
-
+            "banner"                 : "com.youth.banner:banner:1.4.10",
+            "greendao"               : "org.greenrobot:greendao:3.2.2"
     ]
 }

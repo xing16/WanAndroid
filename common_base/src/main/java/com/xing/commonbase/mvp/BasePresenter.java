@@ -1,5 +1,7 @@
 package com.xing.commonbase.mvp;
 
+import android.content.Context;
+
 import com.xing.commonbase.base.BaseObserver;
 import com.xing.commonbase.http.RetrofitClient;
 
@@ -10,14 +12,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class BasePresenter<V extends IView> implements IPresenter<V>  {
+public class BasePresenter<V extends IView> implements IPresenter<V> {
 
     //    protected V view;
     protected WeakReference<V> viewRef;
     // 管理订阅关系，用于取消订阅
     protected CompositeDisposable compositeDisposable;
 
+    protected Context mContext;
+
     public BasePresenter() {
+
     }
 
 
@@ -28,6 +33,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V>  {
      */
     public void attachView(V view) {
         viewRef = new WeakReference<>(view);
+        V v = viewRef.get();
 //        this.view = view;
     }
 

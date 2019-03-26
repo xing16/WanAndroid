@@ -6,11 +6,13 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://maven.google.com' }
+        mavenCentral() // add repository
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         //避免butterKnife在library中使用出现id冲突
         classpath "com.jakewharton:butterknife-gradle-plugin:8.5.1"
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
         
 
         // NOTE: Do not place your application dependencies here; they belong

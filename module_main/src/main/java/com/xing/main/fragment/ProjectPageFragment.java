@@ -10,6 +10,7 @@ import android.view.View;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xing.commonbase.base.BaseLazyFragment;
+import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
 import com.xing.main.adapter.ProjectRecyclerAdapter;
@@ -107,7 +108,7 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
             recyclerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(mDataList.get(position).getLink());
+                    gotoWebViewActivity(mDataList.get(position));
                 }
             });
         } else {
@@ -118,12 +119,16 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
     /**
      * 跳转到 WebViewActivity
      */
-    private void gotoWebViewActivity(String url) {
+    private void gotoWebViewActivity(ProjectResult.DatasBean datasBean) {
         Bundle bundle = new Bundle();
-        bundle.putString("url", url);
+        bundle.putString(Constants.URL, datasBean.getLink());
+        bundle.putInt(Constants.ID, datasBean.getId());
+        bundle.putString(Constants.AUTHOR, datasBean.getAuthor());
+        bundle.putString(Constants.TITLE, datasBean.getTitle());
         ARouter.getInstance()
                 .build("/web/WebViewActivity")
                 .with(bundle)
                 .navigation();
+        getActivity().overridePendingTransition(R.anim.anim_web_enter, R.anim.anim_alpha);
     }
 }

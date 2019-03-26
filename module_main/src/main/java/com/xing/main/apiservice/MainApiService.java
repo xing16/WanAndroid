@@ -2,9 +2,11 @@ package com.xing.main.apiservice;
 
 import com.xing.commonbase.base.BaseResponse;
 import com.xing.main.bean.BannerResult;
+import com.xing.main.bean.FavoriteAddResult;
 import com.xing.main.bean.HomeArticleResult;
 import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
+import com.xing.main.bean.SearchHotKey;
 import com.xing.main.bean.SearchResult;
 
 import java.util.List;
@@ -66,6 +68,36 @@ public interface MainApiService {
      */
     @GET("project/tree/json")
     Observable<BaseResponse<List<ProjectTabItem>>> getProjectTabs();
+
+
+    /**
+     * 收藏站内文章
+     *
+     * @param id
+     * @return
+     */
+    @POST("lg/collect/{id}/json")
+    Observable<BaseResponse<FavoriteAddResult>> addFavorite(@Path("id") int id);
+
+    /**
+     * 收藏站外文章
+     *
+     * @return
+     */
+    @POST("lg/collect/add/json")
+    @FormUrlEncoded
+    Observable<BaseResponse<FavoriteAddResult>> addFavorite(@Field("title") String title,
+                                                            @Field("author") String author,
+                                                            @Field("link") String link);
+
+
+    /**
+     * 获取搜索热词
+     *
+     * @return
+     */
+    @GET("hotkey/json")
+    Observable<BaseResponse<List<SearchHotKey>>> getSearchHotKey();
 
 
 }

@@ -53,6 +53,15 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
         }
     }
 
+    /**
+     * 保存搜索历史
+     *
+     * @param keyword
+     */
+    private void saveSearchHistory(String keyword) {
+        presenter.saveSearchHistory(keyword);
+    }
+
     @Override
     protected SearchResultPresenter createPresenter() {
         return new SearchResultPresenter();
@@ -70,6 +79,8 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
 
     @Override
     protected void initData() {
+        // 保存搜索历史
+        saveSearchHistory(keyword);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)

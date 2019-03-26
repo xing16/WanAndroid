@@ -10,6 +10,19 @@ public interface SearchResultContract {
     }
 
     interface Presenter {
+        /**
+         * 保存搜索历史记录
+         *
+         * @param keyword
+         */
+        void saveSearchHistory(String keyword);
+
+        /**
+         * 获取搜索结果
+         *
+         * @param page
+         * @param keyword
+         */
         void getSearchResult(int page, String keyword);
     }
 }

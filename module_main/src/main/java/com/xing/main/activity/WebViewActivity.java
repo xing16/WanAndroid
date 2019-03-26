@@ -1,4 +1,4 @@
-package com.xing.commonbase.activity;
+package com.xing.main.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,22 +10,37 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.xing.commonbase.R;
-import com.xing.commonbase.base.BaseActivity;
+import com.xing.commonbase.base.BaseMVPActivity;
+import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.ProgressWebView;
+import com.xing.main.R;
+import com.xing.main.contract.WebContract;
+import com.xing.main.presenter.WebPresenter;
 
 @Route(path = "/web/WebViewActivity")
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseMVPActivity<WebPresenter> implements WebContract.View {
 
     private ProgressWebView webView;
     private String url;
     private Toolbar toolbar;
+    private int id;
+    private String title;
+    private String author;
+    private MenuItem favoriteMenuItem;
+    private MenuItem shareMenuItem;
+    private boolean hadFavorited = false;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_web_view;
+    }
+
+    @Override
+    protected WebPresenter createPresenter() {
+        return new WebPresenter();
     }
 
     @Override
@@ -95,23 +110,45 @@ public class WebViewActivity extends BaseActivity {
         super.initData();
         Intent intent = getIntent();
         if (intent != null) {
-            url = intent.getStringExtra("url");
+            url = intent.getStringExtra(Constants.URL);
+            id = intent.getIntExtra(Constants.ID, -1);
+            title = intent.getStringExtra(Constants.TITLE);
+            author = intent.getStringExtra(Constants.AUTHOR);
             webView.loadUrl(url);
         }
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        favoriteMenuItem = menu.findItem(R.id.item_web_favorite);
+        shareMenuItem = menu.findItem(R.id.item_web_share);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_web_view, menu);
+        getMenuInflater().inflate(R.menu.menu_web, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_web_favorite) {
-
+            addArticleFavorite();
+        } else if (item.getItemId() == R.id.item_web_share) {
+            shareArticle();
         }
         return true;
+    }
+
+    private void addArticleFavorite() {
+        presenter.addArticleFavorite(id, title, author, url);
+    }
+
+    /**
+     * 分享文章
+     */
+    private void shareArticle() {
     }
 
     @Override
@@ -121,9 +158,31 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         webView.removeAllViews();
         webView = null;
+    }
+
+    @Override
+    public void onFavoriteAdded() {
+        hadFavorited = true;
+        Toast.makeText(mContext, "Add Favorite Success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFavoriteDeleted() {
+        hadFavorited = false;
+        Toast.makeText(mContext, "Delete Favorite Success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

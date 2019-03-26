@@ -5,7 +5,12 @@
     <item
         android:id="@+id/item_web_favorite"
         android:icon="@drawable/ic_favorite"
-        android:title="@string/favorite"
+        android:title="favorite"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/item_web_share"
+        android:icon="@drawable/ic_share"
+        android:title="share"
+        app:showAsAction="always" />
 </menu>

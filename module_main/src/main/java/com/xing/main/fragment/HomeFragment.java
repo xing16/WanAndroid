@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.xing.commonbase.base.BaseMVPFragment;
+import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.util.StatusBarUtil;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
@@ -78,23 +79,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         searchTxtView = rootView.findViewById(R.id.tv_home_search);
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_header, null);
         banner = headerView.findViewById(R.id.banner_home);
-        float a = 1f;
-
-
-//        if (background instanceof ColorDrawable) {
-//            int color = ((ColorDrawable) background).getColor();
-//            Log.e(TAG, "initView: color = " + color);
-//            color &
-//            int red = color >> 16 & 0xff;
-//            int green = color >> 8 & 0xff;
-//            int blue = color & 0xff;
-//            red = (int) (red * a + 0.5);
-//            green = (int) (green * a + 0.5);
-//            blue = (int) (blue * a + 0.5);
-//            int finalColor = 0xff << 24 | red << 16 | green << 8 | blue;
-//            searchLayoutView.setBackgroundColor(finalColor);
-//
-//        }
     }
 
     @Override
@@ -155,12 +139,12 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             loginTxtView.setTextColor(getResources().getColor(android.R.color.white));
             logoImgView.setImageResource(R.drawable.ic_home_logo_white);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input));
-            ((MainActivity)getActivity()).setStatusBarTransparent();
+            ((MainActivity) getActivity()).setStatusBarTransparent();
         } else {
             loginTxtView.setTextColor(getResources().getColor(R.color.colorAccent));
             logoImgView.setImageResource(R.drawable.ic_home_logo_black);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input_dark));
-            ((MainActivity)getActivity()).setStatusBarWhite();
+            ((MainActivity) getActivity()).setStatusBarWhite();
         }
     }
 
@@ -201,12 +185,28 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             @Override
             public void OnBannerClick(int position) {
                 BannerResult bannerResult = bannerResults.get(position);
-                String url = bannerResult.getUrl();
-                gotoWebViewActivity(url);
+                gotoWebViewActivityFromBanner(bannerResult);
             }
         });
         //banner设置方法全部调用完毕时最后调用
         banner.start();
+
+    }
+
+    private void gotoWebViewActivityFromBanner(BannerResult bannerResult) {
+        if (bannerResult == null) {
+            return;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.URL, bannerResult.getUrl());
+        bundle.putInt(Constants.ID, bannerResult.getId());
+        bundle.putString(Constants.AUTHOR, null);
+        bundle.putString(Constants.TITLE, bannerResult.getTitle());
+        ARouter.getInstance()
+                .build("/web/WebViewActivity")
+                .with(bundle)
+                .navigation();
+        getActivity().overridePendingTransition(R.anim.anim_web_enter, R.anim.anim_alpha);
 
     }
 
@@ -222,22 +222,26 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         }
         dataList.addAll(result.getDatas());
         if (homeArticleAdapter == null) {
-            homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article);
+            homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article,dataList);
             homeArticleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position).getLink());
+                    gotoWebViewActivity(dataList.get(position));
                 }
             });
             homeArticleAdapter.addHeaderView(headerView);
             recyclerView.setAdapter(homeArticleAdapter);
+        } else {
+            homeArticleAdapter.setNewData(dataList);
         }
-        homeArticleAdapter.setNewData(dataList);
     }
 
-    private void gotoWebViewActivity(String link) {
+    private void gotoWebViewActivity(HomeArticleResult.DatasBean datasBean) {
         Bundle bundle = new Bundle();
-        bundle.putString("url", link);
+        bundle.putString(Constants.URL, datasBean.getLink());
+        bundle.putInt(Constants.ID, datasBean.getId());
+        bundle.putString(Constants.AUTHOR, datasBean.getAuthor());
+        bundle.putString(Constants.TITLE, datasBean.getTitle());
         ARouter.getInstance()
                 .build("/web/WebViewActivity")
                 .with(bundle)
@@ -253,15 +257,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             }
         }
         return list;
-    }
-
-
-    public int getScollYDistance() {
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        int position = layoutManager.findFirstVisibleItemPosition();
-        View firstVisiableChildView = layoutManager.findViewByPosition(position);
-        int itemHeight = firstVisiableChildView.getHeight();
-        return (position) * itemHeight - firstVisiableChildView.getTop();
     }
 
     @Override

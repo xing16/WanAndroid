@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.WebViewActivity">
+    tools:context="com.xing.main.activity.WebViewActivity">
 
     <include layout="@layout/layout_toolbar" />
 
@@ -13,6 +13,5 @@
         android:id="@+id/wv_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

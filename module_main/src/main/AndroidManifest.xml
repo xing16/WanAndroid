@@ -3,8 +3,9 @@
     package="com.xing.main">
 
     <application>
-        <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.WebViewActivity" />
     </application>
 
 </manifest>

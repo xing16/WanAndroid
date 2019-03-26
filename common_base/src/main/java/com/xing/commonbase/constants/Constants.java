@@ -23,4 +23,8 @@ public class Constants {
     public static final String SIGNATURE = "signature";
 
     public static  final String KEY_WORD = "key_word";
+    public static  final String AUTHOR = "author";
+    public static  final String TITLE = "title";
+
+
 }

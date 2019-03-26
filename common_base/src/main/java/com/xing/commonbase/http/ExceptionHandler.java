@@ -1,10 +1,10 @@
 package com.xing.commonbase.http;
 
 import android.net.ParseException;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.JsonParseException;
 import com.xing.commonbase.base.BaseApplication;
 
@@ -76,10 +76,8 @@ public class ExceptionHandler {
      */
     private static void handleServerException(int errcode) {
         switch (errcode) {
-//            case 4002:
-            case 47001:
-            case 48001:
-                gotoLoginPage();
+            case -1001:
+                gotoLoginActivity();
                 break;
             default:
                 break;
@@ -87,11 +85,11 @@ public class ExceptionHandler {
     }
 
     /**
-     * 跳转至登录界面,MainActivity launchMode = SingleTask
+     * 跳转到登录界面
      */
-    private static void gotoLoginPage() {
-        Bundle bundle = new Bundle();
-        bundle.putInt("close", 1);
-//        IntentUtils.startActivity(context, MainActivity.class, bundle, Intent.FLAG_ACTIVITY_NEW_TASK);
+    private static void gotoLoginActivity() {
+        ARouter.getInstance()
+                .build("/user/LoginActivity")
+                .navigation();
     }
 }
