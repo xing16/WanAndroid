@@ -17,4 +17,9 @@
         <attr name="zoomTarget" format="integer|reference" />
         <attr name="zoomMax" format="dimension|reference" />
     </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="flow_horizontal_margin" format="dimension" />
+        <attr name="flow_vertical_margin" format="dimension" />
+    </declare-styleable>
 </resources>

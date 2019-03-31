@@ -9,14 +9,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@android:color/white">
 
         <ImageView
             android:id="@+id/iv_search_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             android:src="@drawable/icon_back" />
 
         <TextView
@@ -25,18 +27,20 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:paddingRight="12dp"
             android:text="@string/search"
+            android:textColor="@color/black_333"
             android:textSize="16sp" />
 
         <EditText
             android:id="@+id/et_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/tv_search_text"
-            android:layout_toRightOf="@id/iv_search_back" />
+            android:layout_toRightOf="@id/iv_search_back"
+            android:hint="输入关键字搜索文章"
+            android:singleLine="true" />
 
     </RelativeLayout>
 

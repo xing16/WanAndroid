@@ -16,7 +16,8 @@ import com.xing.main.fragment.SearchHistoryFragment;
 import com.xing.main.fragment.SearchResultFragment;
 
 @Route(path = "/search/SearchActivity")
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener,
+        SearchHistoryFragment.OnDataListener {
 
     private TextView searchTxtView;
     private ImageView searchBackView;
@@ -92,7 +93,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
      * @param keyword
      */
     private void showSearchResultFragment(String keyword) {
-        
         getSupportFragmentManager()
                 .beginTransaction().replace(R.id.fl_search_container, SearchResultFragment.newInstance(keyword))
                 .commit();
@@ -107,4 +107,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 .commit();
     }
 
+    /**
+     * SearchHistoryFragment 向 Activity 传递的数据
+     *
+     * @param content
+     */
+    @Override
+    public void onData(String content) {
+        keywordEditText.setText(content);
+        keywordEditText.setSelection(content.length());
+        showSearchResultFragment(content);
+    }
 }
