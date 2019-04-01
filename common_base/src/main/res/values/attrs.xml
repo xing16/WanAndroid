@@ -19,7 +19,9 @@
     </declare-styleable>
 
     <declare-styleable name="FlowLayout">
-        <attr name="flow_horizontal_margin" format="dimension" />
-        <attr name="flow_vertical_margin" format="dimension" />
+        <attr name="horizontalMargin" format="dimension|reference" />
+        <attr name="verticalMargin" format="dimension|reference" />
     </declare-styleable>
+
+
 </resources>
