@@ -5,7 +5,9 @@
     <application>
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.WebViewActivity" />
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

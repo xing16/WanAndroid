@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,9 @@ public class SearchHistoryFragment extends BaseMVPFragment<SearchHistoryPresente
     protected void initData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
-//                .itemOffsets(10, 10)   // 10dp
                 .height(0.8f)    // 0.5dp
-                .color(Color.parseColor("#aacccccc"));  // color 的 int 值，不是 R.color 中的值
+                .color(Color.parseColor("#aacccccc"))  // color 的 int 值，不是 R.color 中的值
+                .jumpPositions(new int[]{0});
         recyclerView.addItemDecoration(itemDecoration);
         presenter.getSearchHistory();
         presenter.getSearchHotKey();
@@ -98,6 +99,7 @@ public class SearchHistoryFragment extends BaseMVPFragment<SearchHistoryPresente
             @Override
             public View getView(int position, ViewGroup parent) {
                 TextView textView = new TextView(mContext);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
                 textView.setBackgroundResource(R.drawable.shape_search_history_bg);
                 textView.setText(searchHotKeys.get(position).getName());
                 textView.setTextColor(getResources().getColor(R.color.black_333));

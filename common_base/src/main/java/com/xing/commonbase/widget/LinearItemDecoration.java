@@ -12,6 +12,10 @@ import android.view.View;
 
 import com.xing.commonbase.util.DensityUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 /**
  * 自定义 ItemDecoration ，实现 RecyclerView 分割线
  */
@@ -25,6 +29,10 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     private Paint paint;
     private int itemOffsetsLeft = 0;   // 默认值 0
     private int itemOffsetsRight = 0;
+    /**
+     * 跳过指定集合中的 position ，不设置分割线
+     */
+    private List<Integer> jumpPositionList = new ArrayList<>();
 
     public LinearItemDecoration(Context context) {
         this.context = context;
@@ -70,20 +78,33 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
         return this;
     }
 
+    /**
+     * 跳过指定 position ，不设置分割线
+     *
+     * @param positions
+     * @return
+     */
+    public LinearItemDecoration jumpPositions(int[] positions) {
+        if (jumpPositionList == null) {
+            jumpPositionList = new ArrayList<>();
+        }
+        for (int position : positions) {
+            jumpPositionList.add(position);
+        }
+        return this;
+    }
+
+
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        Log.e(TAG, "onDraw: ");
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager == null) {
             return;
         }
         int leftPadding = parent.getPaddingLeft();
         int rightPadding = parent.getPaddingRight();
-        /**
-         * 因为 getItemOffsets 设置的绘制分割线是在 itemView 的 bottom，
-         * 最后一个 item 底部不绘制分割线，所以索引从 0 < index < count-1
-         */
+
         for (int i = 0; i < parent.getChildCount(); i++) {
             View childView = parent.getChildAt(i);
             // 获取 leftItemDecoration 宽度，即是 getItemOffsets() 中 outRect.left 的值
@@ -109,19 +130,18 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        Log.e(TAG, "getItemOffsets: ");   //
+        Log.e(TAG, "getItemOffsets: ");
         outRect.left = itemOffsetsLeft;
         outRect.right = itemOffsetsRight;
 
         // 当前 item 的 position
         int childLayoutPosition = parent.getChildLayoutPosition(view);
-        Log.e(TAG, "getItemOffsets: " + childLayoutPosition);
         // 最后一条 item 的 position
         int lastItemPosition = state.getItemCount() - 1;
         /**
          *  因为是设置的是 outRect.bottom, 所以最后一条不设置底部分割线
          */
-        if (childLayoutPosition == lastItemPosition) {
+        if (jumpPositionList.contains(childLayoutPosition) || childLayoutPosition == lastItemPosition) {
             outRect.bottom = 0;
         } else {
             outRect.bottom = height;

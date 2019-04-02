@@ -89,7 +89,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         recyclerView.setLayoutManager(linearLayoutManager);
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
-//                .itemOffsets(10, 10)   // 10dp
                 .height(8f)    // dp
                 .color(Color.parseColor("#66dddddd"));  // color 的 int 值，不是 R.color 中的值
         recyclerView.addItemDecoration(itemDecoration);
@@ -222,7 +221,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         }
         dataList.addAll(result.getDatas());
         if (homeArticleAdapter == null) {
-            homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article,dataList);
+            homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article, dataList);
             homeArticleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
