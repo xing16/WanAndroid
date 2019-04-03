@@ -45,8 +45,6 @@
             android:textColor="@color/black_333"
             android:textSize="18sp" />
 
-
     </RelativeLayout>
-
 
 </LinearLayout>

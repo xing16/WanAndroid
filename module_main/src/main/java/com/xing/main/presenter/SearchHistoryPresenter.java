@@ -9,6 +9,7 @@ import com.xing.main.bean.SearchHotKey;
 import com.xing.main.bean.db.SearchHistory;
 import com.xing.main.contract.SearchHistoryContract;
 import com.xing.main.db.DbManager;
+import com.xing.main.db.SearchHistoryDao;
 
 import java.util.List;
 
@@ -49,7 +50,11 @@ public class SearchHistoryPresenter extends BasePresenter<SearchHistoryContract.
             @Override
             public void subscribe(ObservableEmitter<List<SearchHistory>> emitter) {
                 // 搜索历史
-                List<SearchHistory> searchHistories = DbManager.getInstance().getSearchHistoryDao().loadAll();
+                List<SearchHistory> searchHistories = DbManager.getInstance()
+                        .getSearchHistoryDao()
+                        .queryBuilder()
+                        .orderDesc(SearchHistoryDao.Properties.Time)
+                        .list();
                 if (searchHistories != null) {
                     emitter.onNext(searchHistories);
                 }

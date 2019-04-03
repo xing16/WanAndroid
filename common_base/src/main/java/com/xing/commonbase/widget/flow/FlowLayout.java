@@ -31,6 +31,7 @@ public class FlowLayout extends ViewGroup {
      * 存储子控件的位置信息
      */
     private List<FlowChildPosition> childPositions = new ArrayList<>();
+    private FlowAdapter adapter;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -123,14 +124,38 @@ public class FlowLayout extends ViewGroup {
      *
      * @param adapter
      */
-    public void setAdapter(FlowAdapter adapter) {
+    public <T> void setAdapter(final FlowAdapter<T> adapter) {
         if (adapter == null) {
             throw new IllegalArgumentException("adapter can't not null");
         }
+        this.adapter = adapter;
         for (int i = 0; i < adapter.getCount(); i++) {
-            View view = adapter.getView(i, this);
-            addView(view);
+            final int position = i;
+            T t = adapter.getItem(position);
+            View view = adapter.getView(i, t, this);
+            if (view != null) {
+                view.setClickable(true);
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onItemClick(position, adapter, FlowLayout.this);
+                        }
+                    }
+                });
+                addView(view);
+            }
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, FlowAdapter adapter, FlowLayout parent);
+    }
+
+    OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
 

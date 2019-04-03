@@ -90,20 +90,28 @@ public class SearchHistoryFragment extends BaseMVPFragment<SearchHistoryPresente
         if (searchHotKeys == null || searchHotKeys.size() == 0) {
             return;
         }
-        flowLayout.setAdapter(new FlowAdapter() {
-            @Override
-            public int getCount() {
-                return searchHotKeys.size();
-            }
+        flowLayout.setAdapter(new FlowAdapter<SearchHotKey>(searchHotKeys) {
 
             @Override
-            public View getView(int position, ViewGroup parent) {
+            public View getView(int position, SearchHotKey searchHotKey, ViewGroup parent) {
                 TextView textView = new TextView(mContext);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
                 textView.setBackgroundResource(R.drawable.shape_search_history_bg);
-                textView.setText(searchHotKeys.get(position).getName());
+                textView.setText(searchHotKey.getName());
                 textView.setTextColor(getResources().getColor(R.color.black_333));
                 return textView;
+            }
+        });
+        // 设置 item 点击事件
+        flowLayout.setOnItemClickListener(new FlowLayout.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, FlowAdapter adapter, FlowLayout parent) {
+                SearchHotKey searchHotKey = searchHotKeys.get(position);
+                String keyword = searchHotKey.getName();
+                // SearchHistoryFragment 通过回调方式将数据传递给 SearchActivity
+                if (onDataListener != null) {
+                    onDataListener.onData(keyword);
+                }
             }
         });
     }
@@ -123,6 +131,7 @@ public class SearchHistoryFragment extends BaseMVPFragment<SearchHistoryPresente
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     SearchHistory searchHistory = searchHistoryList.get(position);
                     String keyword = searchHistory.getKeyword();
+                    // SearchHistoryFragment 通过回调方式将数据传递给 SearchActivity
                     if (onDataListener != null) {
                         onDataListener.onData(keyword);
                     }
