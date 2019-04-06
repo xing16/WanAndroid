@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <com.youth.banner.Banner
         android:id="@+id/banner_home"
         android:layout_width="match_parent"
         android:layout_height="180dp" />
+
+    <com.xing.commonbase.widget.gridviewpager.GridViewPager
+        android:id="@+id/gvp_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@android:color/white"
+        app:itemLayoutId="@layout/item_home_wechat_authors" />
 
 </LinearLayout>

@@ -8,6 +8,8 @@ import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
 import com.xing.main.bean.SearchHotKey;
 import com.xing.main.bean.SearchResult;
+import com.xing.main.bean.WeChatArticleResult;
+import com.xing.main.bean.WeChatAuthorResult;
 
 import java.util.List;
 
@@ -28,6 +30,19 @@ public interface MainApiService {
      */
     @GET("banner/json")
     Observable<BaseResponse<List<BannerResult>>> getBanner();
+
+
+    /**
+     * 获取公众号列表
+     *
+     * @return
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<BaseResponse<List<WeChatAuthorResult>>> getWeChatAuthors();
+
+
+    @GET("wxarticle/list/{id}/{page}/json")
+    Observable<BaseResponse<WeChatArticleResult>> getWeChatArticles(@Path("id") int id, @Path("page") int page);
 
 
     /**

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_home_author_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        tools:src="@drawable/test"
+        tools:text="测试" />
+
+    <TextView
+        android:id="@+id/tv_home_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:maxLength="5"
+        android:singleLine="true"
+        android:textColor="@color/black_333"
+        android:textSize="16sp"
+        tools:text="公众号" />
+
+</LinearLayout>

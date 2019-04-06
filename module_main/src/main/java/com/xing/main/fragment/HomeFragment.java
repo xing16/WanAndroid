@@ -2,6 +2,8 @@ package com.xing.main.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,11 +21,15 @@ import com.xing.commonbase.base.BaseMVPFragment;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.util.StatusBarUtil;
 import com.xing.commonbase.widget.LinearItemDecoration;
+import com.xing.commonbase.widget.gridviewpager.GridRecyclerAdapter;
+import com.xing.commonbase.widget.gridviewpager.GridViewPager;
+import com.xing.commonbase.widget.gridviewpager.GridViewPagerAdapter;
 import com.xing.main.R;
 import com.xing.main.activity.MainActivity;
 import com.xing.main.adapter.HomeArticleAdapter;
 import com.xing.main.bean.BannerResult;
 import com.xing.main.bean.HomeArticleResult;
+import com.xing.main.bean.WeChatAuthorResult;
 import com.xing.main.contract.HomeContract;
 import com.xing.main.imageloader.GlideImageLoader;
 import com.xing.main.presenter.HomePresenter;
@@ -36,6 +42,9 @@ import java.util.List;
 public class HomeFragment extends BaseMVPFragment<HomePresenter> implements HomeContract.View, View.OnClickListener {
 
     private static final String TAG = "HomeFragment";
+    private int[] colors = {0xffec407a, 0xffab47bc, 0xff29b6f6,
+            0xff7e57c2, 0xffe24073, 0xffee8360, 0xff26a69a,
+            0xffef5350, 0xff2baf2b, 0xffffa726};
     private Banner banner;
     private RecyclerView recyclerView;
     private int page = 0;
@@ -49,6 +58,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
     private int bannerHeight;
     private LinearLayoutManager linearLayoutManager;
     private int searchLayoutHeight;
+    private GridViewPager gridViewPager;
 
     public HomeFragment() {
     }
@@ -79,6 +89,8 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         searchTxtView = rootView.findViewById(R.id.tv_home_search);
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_header, null);
         banner = headerView.findViewById(R.id.banner_home);
+        gridViewPager = headerView.findViewById(R.id.gvp_viewpager);
+
     }
 
     @Override
@@ -97,6 +109,9 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         banner.setImageLoader(new GlideImageLoader());
         // 请求 banner 数据
         presenter.getBanner();
+
+        // 请求微信公众号列表
+        presenter.getWeChatAuthors();
 
         // 请求首页文章列表
         presenter.getHomeArticles(page);
@@ -190,6 +205,44 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         //banner设置方法全部调用完毕时最后调用
         banner.start();
 
+    }
+
+    @Override
+    public void onWeChatAuthors(final List<WeChatAuthorResult> weChatAuthorResults) {
+        if (weChatAuthorResults == null) {
+            return;
+        }
+        gridViewPager.setOnGridItemClickListener(new GridViewPager.OnGridItemClickListener() {
+            @Override
+            public void onGridItemClick(int position, View view) {
+                gotoWeChatArticleListActivity(weChatAuthorResults.get(position));
+            }
+        });
+        gridViewPager.setAdapter(new GridViewPagerAdapter<WeChatAuthorResult>(weChatAuthorResults) {
+            @Override
+            public void bindData(GridRecyclerAdapter.ViewHolder viewHolder, WeChatAuthorResult weChatAuthorResult, int position) {
+                ShapeDrawable shapeDrawable = new ShapeDrawable();
+                shapeDrawable.setShape(new OvalShape());
+                shapeDrawable.getPaint().setColor(colors[position % colors.length]);
+                viewHolder.setText(R.id.tv_home_author_icon, String.valueOf(weChatAuthorResult.getName().charAt(0)))
+                        .setText(R.id.tv_home_author_name, weChatAuthorResult.getName())
+                        .setBackground(R.id.tv_home_author_icon, shapeDrawable);
+            }
+        });
+    }
+
+    /**
+     * 跳转至微信公众号文章列表页面
+     *
+     * @param weChatAuthorResult
+     */
+    private void gotoWeChatArticleListActivity(WeChatAuthorResult weChatAuthorResult) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("WeChatAuthorResult", weChatAuthorResult);
+        ARouter.getInstance()
+                .build("/wechat/WeChatArticleListActivity")
+                .withBundle("bundle", bundle)
+                .navigation();
     }
 
     private void gotoWebViewActivityFromBanner(BannerResult bannerResult) {
