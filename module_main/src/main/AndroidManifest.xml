@@ -8,7 +8,8 @@
         <activity
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".activity.WeChatArticleListActivity"></activity>
+        <activity android:name=".activity.WeChatArticleListActivity" />
+        <activity android:name=".activity.SystemArticleActivity"></activity>
     </application>
 
 </manifest>

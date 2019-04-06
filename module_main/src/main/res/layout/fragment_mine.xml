@@ -102,7 +102,7 @@
 
             <!--颜色 515151-->
             <TextView
-                android:id="@+id/item_mine_favorite"
+                android:id="@+id/item_mine_meizi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
@@ -110,21 +110,7 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@color/black_333"
-                android:textSize="18sp" />
-
-            <!--颜色 515151-->
-            <TextView
-                android:id="@+id/item_mine_favorite1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
+                android:text="@string/meizi"
                 android:textColor="@color/black_333"
                 android:textSize="18sp" />
 

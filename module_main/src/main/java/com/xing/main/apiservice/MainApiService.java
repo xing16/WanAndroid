@@ -8,6 +8,8 @@ import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
 import com.xing.main.bean.SearchHotKey;
 import com.xing.main.bean.SearchResult;
+import com.xing.main.bean.SystemArticleResult;
+import com.xing.main.bean.SystemResult;
 import com.xing.main.bean.WeChatArticleResult;
 import com.xing.main.bean.WeChatAuthorResult;
 
@@ -113,6 +115,24 @@ public interface MainApiService {
      */
     @GET("hotkey/json")
     Observable<BaseResponse<List<SearchHotKey>>> getSearchHotKey();
+
+    /**
+     * 获取体系列表
+     *
+     * @return
+     */
+    @GET("tree/json")
+    Observable<BaseResponse<List<SystemResult>>> getSystemList();
+
+    /**
+     * 获取体系下分级下文章
+     *
+     * @param cid
+     * @return
+     */
+    @GET("/article/list/{page}/json")
+    Observable<BaseResponse<SystemArticleResult>> getSystemArticles(@Path("page") int page,
+                                                                    @Query("cid") int cid);
 
 
 }

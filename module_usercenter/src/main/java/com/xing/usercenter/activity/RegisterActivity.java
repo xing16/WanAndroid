@@ -1,5 +1,6 @@
 package com.xing.usercenter.activity;
 
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,6 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
     EditText passwordEditText;
     EditText repasswordEditText;
     Button registerBtn;
-    private View backView;
 
     @Override
     protected int getLayoutResId() {
@@ -29,11 +29,20 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
 
     @Override
     protected void initView() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.register);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         usernameEditText = findViewById(R.id.et_register_username);
         passwordEditText = findViewById(R.id.et_register_password);
         repasswordEditText = findViewById(R.id.et_register_repassword);
         registerBtn = findViewById(R.id.btn_register);
-        backView = findViewById(R.id.layout_register_back);
     }
 
     @Override
@@ -68,13 +77,6 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
                     return;
                 }
                 presenter.register(username, password, repassword);
-            }
-        });
-
-        backView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
