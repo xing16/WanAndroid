@@ -1,9 +1,11 @@
 package com.xing.main.activity;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -29,6 +31,8 @@ public class MainActivity extends BaseActivity {
     private RadioButton homeRadioButton;
     private RadioButton mineRadioButton;
     private int currentSelectedId = R.id.rb_home;
+    private ProjectFragment projectFragment;
+    private SystemFragment systemFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -37,8 +41,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setStatusBarTransparent();
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
         radioGroup = findViewById(R.id.rg_radio_group);
         homeRadioButton = findViewById(R.id.rb_home);
         mineRadioButton = findViewById(R.id.rb_mine);
@@ -62,10 +64,13 @@ public class MainActivity extends BaseActivity {
                     selectFragment(0);
                 } else if (checkedId == R.id.rb_project) {
                     selectFragment(1);
+                    projectFragment.setStatusBarColor(Color.WHITE);
+                    setStatusBarTextColorLight(true);
                 } else if (checkedId == R.id.rb_system) {
                     selectFragment(2);
                 } else if (checkedId == R.id.rb_mine) {
                     selectFragment(3);
+
                 }
             }
         });
@@ -78,11 +83,11 @@ public class MainActivity extends BaseActivity {
         ft.add(R.id.fl_main_container, homeFragment);
         fragmentList.add(homeFragment);
 
-        ProjectFragment projectFragment = new ProjectFragment();
+        projectFragment = new ProjectFragment();
         ft.add(R.id.fl_main_container, projectFragment);
         fragmentList.add(projectFragment);
 
-        SystemFragment systemFragment = new SystemFragment();
+        systemFragment = new SystemFragment();
         ft.add(R.id.fl_main_container, systemFragment);
         fragmentList.add(systemFragment);
 
@@ -113,11 +118,24 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    public void setStatusBarTransparent() {
-        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
+    /**
+     * 覆盖 BaseActivity 中的方法，使用 fragment 中的设置的方法
+     */
+    @Override
+    public void setStatusBarColor() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
     }
 
-    public void setStatusBarWhite() {
-        StatusBarUtil.setColor(this, Color.WHITE);
+    /**
+     * 设置状态栏文字颜色
+     *
+     * @param isLight : true ---> 颜色为 黑色 ， false ： 白色
+     */
+    private void setStatusBarTextColorLight(boolean isLight) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (isLight) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); //黑色
+            }
+        }
     }
 }

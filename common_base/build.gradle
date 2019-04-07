@@ -59,4 +59,5 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies['arouter-compiler']
     api rootProject.ext.dependencies['banner']
     api rootProject.ext.dependencies['greendao']
+    api rootProject.ext.dependencies['retrofit-cookie']
 }

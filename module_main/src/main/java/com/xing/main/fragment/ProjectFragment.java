@@ -3,6 +3,7 @@ package com.xing.main.fragment;
 import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import com.xing.commonbase.base.BaseMVPFragment;
@@ -18,8 +19,9 @@ import java.util.List;
 public class ProjectFragment extends BaseMVPFragment<ProjectPresenter>
         implements ProjectContract.View {
 
-    private ViewPager viewPager;
+    private View mFakeStatusBar;
     private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     public ProjectFragment() {
     }
@@ -36,8 +38,16 @@ public class ProjectFragment extends BaseMVPFragment<ProjectPresenter>
 
     @Override
     protected void initView(View rootView) {
+        mFakeStatusBar = rootView.findViewById(R.id.fake_status_bar);
         tabLayout = rootView.findViewById(R.id.tl_project);
         viewPager = rootView.findViewById(R.id.vp_project_page);
+        mFakeStatusBar.post(new Runnable() {
+            @Override
+            public void run() {
+                int height = mFakeStatusBar.getHeight();
+                Log.e("debufgdbug", "run: " + height);
+            }
+        });
     }
 
     @Override
@@ -72,4 +82,9 @@ public class ProjectFragment extends BaseMVPFragment<ProjectPresenter>
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
+
+    public void setStatusBarColor(int color) {
+        mFakeStatusBar.setBackgroundColor(color);
+    }
+
 }

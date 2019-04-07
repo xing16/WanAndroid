@@ -1,5 +1,10 @@
 package com.xing.commonbase.http;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.xing.commonbase.base.BaseApplication;
 import com.xing.commonbase.json.FastJsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -16,9 +21,15 @@ public class RetrofitClient {
     private static Retrofit retrofit;
 
     private RetrofitClient() {
+
+        ClearableCookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(),
+                        new SharedPrefsCookiePersistor(BaseApplication.getApplication()));
+
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
+                .cookieJar(cookieJar)
                 .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
                 .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
                 .addInterceptor(InterceptorUtil.logInterceptor())

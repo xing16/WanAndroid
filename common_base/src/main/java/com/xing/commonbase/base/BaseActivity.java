@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.xing.commonbase.receiver.NetworkChangeReceiver;
+import com.xing.commonbase.util.StatusBarUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -21,11 +22,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
         mContext = this;
-//        StatusBarUtil.setColor(this, getResources().getColor(android.R.color.white));
+        setStatusBarColor();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
+        }
         registerNetworkChangeReceiver();
         initView();
         initData();
     }
+
+    public void setStatusBarColor() {
+        StatusBarUtil.setColor(this, getResources().getColor(android.R.color.white),
+                0);
+    }
+
 
     protected abstract int getLayoutResId();
 
