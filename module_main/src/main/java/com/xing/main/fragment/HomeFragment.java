@@ -25,6 +25,7 @@ import com.xing.commonbase.widget.gridviewpager.GridRecyclerAdapter;
 import com.xing.commonbase.widget.gridviewpager.GridViewPager;
 import com.xing.commonbase.widget.gridviewpager.GridViewPagerAdapter;
 import com.xing.main.R;
+import com.xing.main.activity.MainActivity;
 import com.xing.main.adapter.HomeArticleAdapter;
 import com.xing.main.bean.BannerResult;
 import com.xing.main.bean.HomeArticleResult;
@@ -152,12 +153,12 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             loginTxtView.setTextColor(getResources().getColor(android.R.color.white));
             logoImgView.setImageResource(R.drawable.ic_home_logo_white);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input));
-//            ((MainActivity) getActivity()).setStatusBarTransparent();
+//            ((MainActivity) getActivity()).setTransparent();
         } else {
             loginTxtView.setTextColor(getResources().getColor(R.color.colorAccent));
             logoImgView.setImageResource(R.drawable.ic_home_logo_black);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input_dark));
-//            ((MainActivity) getActivity()).setStatusBarWhite();
+            ((MainActivity) getActivity()).setStatusBarWhite();
         }
     }
 

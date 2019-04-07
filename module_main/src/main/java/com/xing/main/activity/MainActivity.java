@@ -1,11 +1,9 @@
 package com.xing.main.activity;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -65,7 +63,7 @@ public class MainActivity extends BaseActivity {
                 } else if (checkedId == R.id.rb_project) {
                     selectFragment(1);
                     projectFragment.setStatusBarColor(Color.WHITE);
-                    setStatusBarTextColorLight(true);
+                    StatusBarUtil.setLightMode(MainActivity.this);
                 } else if (checkedId == R.id.rb_system) {
                     selectFragment(2);
                 } else if (checkedId == R.id.rb_mine) {
@@ -118,24 +116,20 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    public void setStatusBarWhite() {
+        StatusBarUtil.setColor(this, Color.WHITE, 0);
+    }
+
+    public void setTransparent() {
+        StatusBarUtil.setTransparent(this);
+    }
+
+
     /**
      * 覆盖 BaseActivity 中的方法，使用 fragment 中的设置的方法
      */
     @Override
     public void setStatusBarColor() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
-    }
-
-    /**
-     * 设置状态栏文字颜色
-     *
-     * @param isLight : true ---> 颜色为 黑色 ， false ： 白色
-     */
-    private void setStatusBarTextColorLight(boolean isLight) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (isLight) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); //黑色
-            }
-        }
+        StatusBarUtil.setTransparentForImageViewInFragment(this, null);
     }
 }
