@@ -86,47 +86,32 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/item_mine"
+            <com.xing.commonbase.widget.ItemView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/favorite"
-                android:textColor="@color/black_333"
-                android:textSize="18sp" />
+                app:itemTitle="@string/favorite"
+                app:leftIcon="@drawable/ic_mine_favorite" />
 
-            <!--颜色 515151-->
-            <TextView
-                android:id="@+id/item_mine_meizi"
+            <com.xing.commonbase.widget.ItemView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="@string/meizi"
-                android:textColor="@color/black_333"
-                android:textSize="18sp" />
+                app:itemTitle="轻松一刻"
+                app:leftIcon="@drawable/ic_mine_happy" />
 
-            <!--颜色 515151-->
-            <!--颜色 515151-->
-            <TextView
+            <com.xing.commonbase.widget.ItemView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableLeft="@drawable/ic_mine_favorite"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="关于"
-                android:textColor="@color/black_333"
-                android:textSize="18sp" /> <!--颜色 515151-->
+                app:itemTitle="@string/setting"
+                app:leftIcon="@drawable/ic_mine_setting" />
+
+            <com.xing.commonbase.widget.ItemView
+                android:id="@+id/iv_mine_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerVisible="false"
+                app:itemTitle="@string/about"
+                app:leftIcon="@drawable/ic_mine_about" />
 
         </LinearLayout>
 

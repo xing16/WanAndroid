@@ -53,8 +53,8 @@ public class SystemFragment extends BaseMVPFragment<SystemPresenter> implements 
         rightRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
-                .height(1f)    // dp
-                .color(0xaa999999);  // color 的 int 值，不是 R.color 中的值
+                .height(0.5f)    // dp
+                .color(0xaacccccc);  // color 的 int 值，不是 R.color 中的值
         leftRecyclerView.addItemDecoration(itemDecoration);
 
         /**
@@ -71,6 +71,8 @@ public class SystemFragment extends BaseMVPFragment<SystemPresenter> implements 
         if (systemLeftAdapter == null) {
             // 左侧 recyclerview
             systemLeftAdapter = new SystemLeftAdapter(R.layout.item_system_left, systemResults);
+            systemResults.get(0).setSelected(true);
+            systemLeftAdapter.notifyDataSetChanged();
             systemLeftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -78,6 +80,11 @@ public class SystemFragment extends BaseMVPFragment<SystemPresenter> implements 
                         return;
                     }
                     leftCurPosition = position;
+                    for (int i = 0; i < systemResults.size(); i++) {
+                        SystemResult systemResult = systemResults.get(i);
+                        systemResult.setSelected(i == leftCurPosition);
+                    }
+                    systemLeftAdapter.notifyDataSetChanged();
                     SystemResult systemResult = systemResults.get(position);
                     if (systemResult != null) {
                         List<SystemResult.ChildrenBean> children = systemResult.getChildren();
@@ -86,19 +93,20 @@ public class SystemFragment extends BaseMVPFragment<SystemPresenter> implements 
                 }
             });
             leftRecyclerView.setAdapter(systemLeftAdapter);
-            // 右侧 recyclerview
-            if (systemRightAdapter == null) {
-                systemRightAdapter = new SystemRightAdapter(R.layout.item_system_right, systemResults.get(0).getChildren());
-                systemRightAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        gotoSystemArticleActivity(systemRightAdapter.getData().get(position));
-                    }
-                });
-                rightRecyclerView.setAdapter(systemRightAdapter);
-            }
+
         } else {
             systemLeftAdapter.setNewData(systemResults);
+        }
+        // 右侧 recyclerview
+        if (systemRightAdapter == null) {
+            systemRightAdapter = new SystemRightAdapter(R.layout.item_system_right, systemResults.get(0).getChildren());
+            systemRightAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    gotoSystemArticleActivity(systemRightAdapter.getData().get(position));
+                }
+            });
+            rightRecyclerView.setAdapter(systemRightAdapter);
         }
     }
 
@@ -109,7 +117,7 @@ public class SystemFragment extends BaseMVPFragment<SystemPresenter> implements 
      */
     private void gotoSystemArticleActivity(SystemResult.ChildrenBean childrenBean) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("SystemResult",childrenBean);
+        bundle.putSerializable("SystemResult", childrenBean);
         ARouter.getInstance()
                 .build("/system/SystemArticleActivity")
                 .with(bundle)

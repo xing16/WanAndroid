@@ -20,6 +20,7 @@ public class SystemLeftAdapter extends BaseQuickAdapter<SystemResult, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, SystemResult item) {
-        helper.setText(R.id.tv_system_left_title, item.getName());
+        helper.setText(R.id.tv_system_left_title, item.getName())
+                .setBackgroundColor(R.id.tv_system_left_title, item.isSelected() ? 0xffffffff : 0xffeeeeee);
     }
 }

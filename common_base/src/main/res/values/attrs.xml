@@ -35,5 +35,16 @@
         <attr name="normalColor" format="color" />
         <attr name="selectedColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="ItemView">
+        <attr name="leftIcon" format="integer|reference" />
+        <attr name="rightIcon" format="reference|integer" />
+        <attr name="itemTitle" format="string|reference" />
+        <attr name="itemBackgroundColor" format="color|reference" />
+        <attr name="dividerVisible" format="boolean" />
+        <attr name="dividerLeftMargin" format="dimension" />
+        <attr name="dividerRightMargin" format="dimension" />
+
+    </declare-styleable>
+
 
 </resources>

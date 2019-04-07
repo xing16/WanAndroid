@@ -25,6 +25,11 @@ public class SystemResult {
     private int visible;
     private List<ChildrenBean> children;
 
+    /**
+     * 标示当前 item 是否选中的状态
+     */
+    private boolean isSelected = false;
+
     public int getCourseId() {
         return courseId;
     }
@@ -87,6 +92,14 @@ public class SystemResult {
 
     public void setChildren(List<ChildrenBean> children) {
         this.children = children;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public static class ChildrenBean implements Serializable {

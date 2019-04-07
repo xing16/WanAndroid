@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activity.AboutActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/transparent"
+        android:focusable="false"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="本项目基于 MVP + RxJava2 + Retrofit开发的组件化 App,利用周末时间完成。\n\n项目地址： https://github.com/xing16/WanAndroid"
+        android:textColor="@color/black_333"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

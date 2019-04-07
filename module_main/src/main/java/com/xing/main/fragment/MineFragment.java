@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xing.commonbase.base.BaseFragment;
 import com.xing.commonbase.util.BlurUtil;
+import com.xing.commonbase.widget.ItemView;
 import com.xing.commonbase.widget.ZoomScrollView;
 import com.xing.main.R;
 
@@ -19,6 +20,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ZoomScrollView scrollView;
     private View avatarLayout;
     private TextView meiziView;
+    private ItemView aboutItemView;
 
     public MineFragment() {
     }
@@ -33,7 +35,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         backImgView = rootView.findViewById(R.id.iv_avatar_background);
         scrollView = rootView.findViewById(R.id.sv_scroll);
 //        avatarLayout = rootView.findViewById(R.id.rl_layout);
-        meiziView = rootView.findViewById(R.id.item_mine_meizi);
+        aboutItemView = rootView.findViewById(R.id.iv_mine_about);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         backImgView.setImageBitmap(BlurUtil.blur(mContext, bitmap, 18));
 
 
-        meiziView.setOnClickListener(this);
+        aboutItemView.setOnClickListener(this);
     }
 
     @Override
@@ -58,14 +60,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.item_mine_meizi) {
-            gotoMeiziActivity();
+        if (v.getId() == R.id.iv_mine_about) {
+            gotoAboutActivity();
         }
     }
 
-    private void gotoMeiziActivity() {
+    private void gotoAboutActivity() {
         ARouter.getInstance()
-                .build("/meizi/MeiziActivity")
+                .build("/about/AboutActivity")
                 .navigation();
     }
 }
