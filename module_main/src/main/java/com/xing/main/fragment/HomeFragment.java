@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xing.commonbase.base.BaseMVPFragment;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.util.StatusBarUtil;
@@ -59,6 +62,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
     private LinearLayoutManager linearLayoutManager;
     private int searchLayoutHeight;
     private GridViewPager gridViewPager;
+    private RefreshLayout refreshLayout;
 
     public HomeFragment() {
     }
@@ -82,6 +86,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
 
     @Override
     protected void initView(View rootView) {
+        refreshLayout = rootView.findViewById(R.id.srl_home);
         logoImgView = rootView.findViewById(R.id.iv_home_logo);
         recyclerView = rootView.findViewById(R.id.rv_home);
         searchLayoutView = rootView.findViewById(R.id.rl_search_header);
@@ -135,6 +140,21 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
                 setSearchLayoutAlpha(scrollOffset);
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                presenter.getHomeArticles(page);
+//                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
     }
 
     private void setSearchLayoutAlpha(int offset) {
@@ -146,14 +166,15 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         }
         int maxOffset = bannerHeight - StatusBarUtil.getStatusBarHeight(mContext) - searchLayoutHeight;
         Log.e(TAG, "offset: " + offset + ", maxOffset = " + maxOffset);
+
+
         if (offset <= maxOffset) {
             float percent = offset * 1.0f / maxOffset;
-            Log.e(TAG, "setSearchLayoutAlpha: percent = " + percent);
             searchLayoutView.getBackground().mutate().setAlpha((int) (255 * percent));
             loginTxtView.setTextColor(getResources().getColor(android.R.color.white));
             logoImgView.setImageResource(R.drawable.ic_home_logo_white);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input));
-//            ((MainActivity) getActivity()).setTransparent();
+            ((MainActivity) getActivity()).setStatusBarColor();
         } else {
             loginTxtView.setTextColor(getResources().getColor(R.color.colorAccent));
             logoImgView.setImageResource(R.drawable.ic_home_logo_black);
@@ -269,6 +290,8 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
      */
     @Override
     public void onHomeArticles(HomeArticleResult result) {
+        refreshLayout.finishLoadMore();
+        page++;
         if (result == null) {
             return;
         }

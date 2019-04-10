@@ -20,6 +20,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ZoomScrollView scrollView;
     private View avatarLayout;
     private TextView meiziView;
+    private ItemView favoriteItemView;
     private ItemView aboutItemView;
 
     public MineFragment() {
@@ -35,6 +36,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         backImgView = rootView.findViewById(R.id.iv_avatar_background);
         scrollView = rootView.findViewById(R.id.sv_scroll);
 //        avatarLayout = rootView.findViewById(R.id.rl_layout);
+        favoriteItemView = rootView.findViewById(R.id.iv_mine_favorite);
         aboutItemView = rootView.findViewById(R.id.iv_mine_about);
     }
 
@@ -45,7 +47,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         backImgView.setImageBitmap(BlurUtil.blur(mContext, bitmap, 18));
 
 
+        favoriteItemView.setOnClickListener(this);
         aboutItemView.setOnClickListener(this);
+
     }
 
     @Override
@@ -62,7 +66,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.iv_mine_about) {
             gotoAboutActivity();
+        } else if (v.getId() == R.id.iv_mine_favorite) {
+            gotoFavoriteActivity();
         }
+    }
+
+    private void gotoFavoriteActivity() {
+        ARouter.getInstance()
+                .build("/favorite/FavoriteActivity")
+                .navigation();
     }
 
     private void gotoAboutActivity() {

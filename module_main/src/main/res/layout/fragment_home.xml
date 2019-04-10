@@ -5,17 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_home"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/rl_search_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
         android:background="#ffffff"
+        android:paddingLeft="12dp"
         android:paddingBottom="8dp">
 
         <TextView

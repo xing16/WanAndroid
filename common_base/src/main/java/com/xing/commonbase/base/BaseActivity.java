@@ -23,19 +23,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
         mContext = this;
         setStatusBarColor();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
         }
+//        StatusBarUtil.setLightMode(this);
+
         registerNetworkChangeReceiver();
         initView();
         initData();
     }
 
     public void setStatusBarColor() {
-        StatusBarUtil.setColor(this, getResources().getColor(android.R.color.white),
-                0);
+        StatusBarUtil.setColor(this, getResources().getColor(android.R.color.white), 0);
     }
-
 
     protected abstract int getLayoutResId();
 

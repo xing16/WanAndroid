@@ -17,94 +17,87 @@ import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
 import com.xing.main.R;
-import com.xing.main.adapter.WeChatArticleAdapter;
-import com.xing.main.bean.WeChatArticleResult;
-import com.xing.main.bean.WeChatAuthorResult;
-import com.xing.main.contract.WeChatArticleListContract;
-import com.xing.main.presenter.WeChatArticlePresenter;
+import com.xing.main.adapter.FavoriteAdapter;
+import com.xing.main.bean.FavoriteResult;
+import com.xing.main.contract.FavoriteContract;
+import com.xing.main.presenter.FavoritePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(path = "/wechat/WeChatArticleListActivity")
-public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePresenter>
-        implements WeChatArticleListContract.View {
-
+@Route(path = "/favorite/FavoriteActivity")
+public class FavoriteActivity extends BaseMVPActivity<FavoritePresenter>
+        implements FavoriteContract.View {
     private RecyclerView recyclerView;
-    private int page;
-    private WeChatArticleAdapter adapter;
-    private List<WeChatArticleResult.DatasBean> dataList = new ArrayList<>();
-    private Toolbar toolbar;
+    private int page = 0;
+    private List<FavoriteResult.DatasBean> dataList = new ArrayList<>();
+    private FavoriteAdapter adapter;
     private RefreshLayout refreshLayout;
-    private int id;
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_we_chat_article_list;
+        return R.layout.activity_favorite;
     }
 
     @Override
+    protected FavoritePresenter createPresenter() {
+        return new FavoritePresenter();
+    }
+
+
+    @Override
     protected void initView() {
-        refreshLayout = findViewById(R.id.srl_wechat);
-        recyclerView = findViewById(R.id.rv_wechat_article);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.favorite);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-    }
-
-    @Override
-    protected WeChatArticlePresenter createPresenter() {
-        return new WeChatArticlePresenter();
+        refreshLayout = findViewById(R.id.srl_favorite);
+        recyclerView = findViewById(R.id.rv_favorite);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
-                .height(1f)    // dp
-                .margin(10, 10)
-                .color(Color.parseColor("#66dddddd"));  // color 的 int 值，不是 R.color 中的值
+//                .itemOffsets(10, 10)   // 10dp
+                .height(0.8f)    // 0.5dp
+                .color(Color.parseColor("#aacccccc"))  // color 的 int 值，不是 R.color 中的值
+                .margin(12, 12);  // 12dp
         recyclerView.addItemDecoration(itemDecoration);
+        presenter.getFavoriteList(page);
 
-        Bundle bundle = getIntent().getBundleExtra("bundle");
-        if (bundle != null) {
-            WeChatAuthorResult weChatAuthorResult = (WeChatAuthorResult) bundle.getSerializable("WeChatAuthorResult");
-            id = weChatAuthorResult.getId();
-            String name = weChatAuthorResult.getName();
-            getSupportActionBar().setTitle(name);
-            presenter.getWeChatArticle(id, page);
-        }
-
-        setListener();
-    }
-
-    private void setListener() {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                presenter.getWeChatArticle(id, page);
+                presenter.getFavoriteList(page);
             }
         });
     }
 
+    /**
+     * 获取收藏列表结果回调
+     *
+     * @param result
+     */
     @Override
-    public void onWeChatArticleList(WeChatArticleResult result) {
+    public void onFavoriteList(FavoriteResult result) {
         refreshLayout.finishLoadMore();
         page++;
         if (result == null) {
             return;
         }
+
         dataList.addAll(result.getDatas());
         if (adapter == null) {
-            adapter = new WeChatArticleAdapter(R.layout.item_home_article, dataList);
+            adapter = new FavoriteAdapter(R.layout.item_home_article, dataList);
             adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -118,22 +111,21 @@ public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePres
     }
 
     /**
-     * 跳转至 webviewactivity
-     *
-     * @param datasBean
+     * 跳转到 WebViewActivity
      */
-    private void gotoWebViewActivity(WeChatArticleResult.DatasBean datasBean) {
+    private void gotoWebViewActivity(FavoriteResult.DatasBean bean) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TITLE, datasBean.getTitle());
-        bundle.putString(Constants.AUTHOR, datasBean.getAuthor());
-        bundle.putInt(Constants.ID, datasBean.getId());
-        bundle.putString(Constants.URL, datasBean.getLink());
+        bundle.putString(Constants.URL, bean.getLink());
+        bundle.putInt(Constants.ID, bean.getId());
+        bundle.putString(Constants.AUTHOR, bean.getAuthor());
+        bundle.putString(Constants.TITLE, bean.getTitle());
         ARouter.getInstance()
                 .build("/web/WebViewActivity")
                 .with(bundle)
                 .navigation();
         overridePendingTransition(R.anim.anim_web_enter, R.anim.anim_alpha);
     }
+
 
     @Override
     public void showLoading() {
@@ -144,4 +136,5 @@ public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePres
     public void hideLoading() {
 
     }
+
 }

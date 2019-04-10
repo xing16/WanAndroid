@@ -10,7 +10,8 @@
             android:launchMode="singleTop" />
         <activity android:name=".activity.WeChatArticleListActivity" />
         <activity android:name=".activity.SystemArticleActivity" />
-        <activity android:name=".activity.AboutActivity"></activity>
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.FavoriteActivity"></activity>
     </application>
 
 </manifest>

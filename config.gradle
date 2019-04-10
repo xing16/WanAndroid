@@ -41,6 +41,7 @@ ext {
             "recycler-adapter-helper": "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
             "banner"                 : "com.youth.banner:banner:1.4.10",
             "greendao"               : "org.greenrobot:greendao:3.2.2",
-            "retrofit-cookie"        : "com.github.franmontiel:PersistentCookieJar:v1.0.1"
+            "retrofit-cookie"        : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
+            "smart-refreshlayout"    : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21"
     ]
 }

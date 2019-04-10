@@ -115,16 +115,6 @@ public class MainActivity extends BaseActivity {
         ft.commit();
     }
 
-
-    public void setStatusBarWhite() {
-        StatusBarUtil.setColor(this, Color.WHITE, 0);
-    }
-
-    public void setTransparent() {
-        StatusBarUtil.setTransparent(this);
-    }
-
-
     /**
      * 覆盖 BaseActivity 中的方法，使用 fragment 中的设置的方法
      */
@@ -132,4 +122,19 @@ public class MainActivity extends BaseActivity {
     public void setStatusBarColor() {
         StatusBarUtil.setTransparentForImageViewInFragment(this, null);
     }
+
+    public void setStatusBarWhite() {
+
+    }
+
+    /**
+     * 设置状态栏透明度
+     *
+     * @param alpha
+     */
+    public void setStatusBarTranslute(int alpha) {
+        StatusBarUtil.setColor(this, Color.WHITE, alpha);
+    }
+
+
 }

@@ -3,6 +3,7 @@ package com.xing.main.apiservice;
 import com.xing.commonbase.base.BaseResponse;
 import com.xing.main.bean.BannerResult;
 import com.xing.main.bean.FavoriteAddResult;
+import com.xing.main.bean.FavoriteResult;
 import com.xing.main.bean.HomeArticleResult;
 import com.xing.main.bean.ProjectResult;
 import com.xing.main.bean.ProjectTabItem;
@@ -134,5 +135,11 @@ public interface MainApiService {
     Observable<BaseResponse<SystemArticleResult>> getSystemArticles(@Path("page") int page,
                                                                     @Query("cid") int cid);
 
+
+    /**
+     * 获取收藏文章列表
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<BaseResponse<FavoriteResult>> getFavoriteList(@Path("page") int page);
 
 }
