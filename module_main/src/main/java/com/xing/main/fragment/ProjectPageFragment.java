@@ -4,11 +4,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.xing.commonbase.base.BaseLazyFragment;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
@@ -28,6 +28,7 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
     private int page = 0;
     private ProjectRecyclerAdapter recyclerAdapter;
     private List<ProjectResult.DatasBean> mDataList = new ArrayList<>();
+    private RefreshLayout refreshLayout;
 
     public static ProjectPageFragment newInstance(int id) {
         ProjectPageFragment homePageFragment = new ProjectPageFragment();
@@ -63,20 +64,20 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 
     @Override
     protected void initView(View rootView) {
+        refreshLayout = rootView.findViewById(R.id.srl_project);
         recyclerView = rootView.findViewById(R.id.rv_home_page);
     }
 
     @Override
     protected void initData() {
-        Log.e("LinearItemDecoration", "initData: " + id);
         // 设置 ItemDecoration 作为分割线
         LinearItemDecoration itemDecoration = new LinearItemDecoration(mContext)
-//                .itemOffsets(10, 10)   // 10dp
                 .height(0.8f)    // 0.5dp
                 .color(Color.parseColor("#aacccccc"))  // color 的 int 值，不是 R.color 中的值
                 .margin(12, 12);  // 12dp
         recyclerView.addItemDecoration(itemDecoration);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
+                LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
     }
@@ -93,26 +94,27 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 
     @Override
     public void onProjectList(ProjectResult projectResult) {
-        if (projectResult == null) {
-            return;
-        }
-        List<ProjectResult.DatasBean> datas = projectResult.getDatas();
-        if (datas == null || datas.size() == 0) {
-            return;
-        }
-
-        mDataList.addAll(datas);
-        if (recyclerAdapter == null) {
-            recyclerAdapter = new ProjectRecyclerAdapter(R.layout.item_recycler_project, mDataList);
-            recyclerView.setAdapter(recyclerAdapter);
-            recyclerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(mDataList.get(position));
+        refreshLayout.finishLoadMore();
+        page++;
+        if (projectResult != null) {
+            List<ProjectResult.DatasBean> datas = projectResult.getDatas();
+            if (datas != null) {
+                mDataList.addAll(datas);
+                if (recyclerAdapter == null) {
+                    recyclerAdapter = new ProjectRecyclerAdapter(R.layout.item_recycler_project, mDataList);
+                    recyclerView.setAdapter(recyclerAdapter);
+                    recyclerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            gotoWebViewActivity(mDataList.get(position));
+                        }
+                    });
+                } else {
+                    recyclerAdapter.setNewData(mDataList);
                 }
-            });
-        } else {
-//            recyclerAdapter.set
+            } else {
+                refreshLayout.setNoMoreData(true);
+            }
         }
     }
 

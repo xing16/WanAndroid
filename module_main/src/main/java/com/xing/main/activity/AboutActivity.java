@@ -7,7 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseActivity;
 import com.xing.main.R;
 
-@Route(path = "/about/AboutActivity")
+@Route(path = "/main/AboutActivity")
 public class AboutActivity extends BaseActivity {
 
     @Override

@@ -99,22 +99,27 @@ public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePres
     public void onWeChatArticleList(WeChatArticleResult result) {
         refreshLayout.finishLoadMore();
         page++;
-        if (result == null) {
-            return;
-        }
-        dataList.addAll(result.getDatas());
-        if (adapter == null) {
-            adapter = new WeChatArticleAdapter(R.layout.item_home_article, dataList);
-            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position));
+        if (result != null) {
+            List<WeChatArticleResult.DatasBean> datas = result.getDatas();
+            if (datas != null) {
+                dataList.addAll(datas);
+                if (adapter == null) {
+                    adapter = new WeChatArticleAdapter(R.layout.item_home_article, dataList);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            gotoWebViewActivity(dataList.get(position));
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    adapter.setNewData(dataList);
                 }
-            });
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter.setNewData(dataList);
+            } else {
+                refreshLayout.setNoMoreData(true);
+            }
         }
+
     }
 
     /**

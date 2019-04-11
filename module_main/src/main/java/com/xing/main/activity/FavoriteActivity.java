@@ -25,7 +25,7 @@ import com.xing.main.presenter.FavoritePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(path = "/favorite/FavoriteActivity")
+@Route(path = "/main/FavoriteActivity")
 public class FavoriteActivity extends BaseMVPActivity<FavoritePresenter>
         implements FavoriteContract.View {
     private RecyclerView recyclerView;
@@ -91,22 +91,25 @@ public class FavoriteActivity extends BaseMVPActivity<FavoritePresenter>
     public void onFavoriteList(FavoriteResult result) {
         refreshLayout.finishLoadMore();
         page++;
-        if (result == null) {
-            return;
-        }
-
-        dataList.addAll(result.getDatas());
-        if (adapter == null) {
-            adapter = new FavoriteAdapter(R.layout.item_home_article, dataList);
-            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position));
+        if (result != null) {
+            List<FavoriteResult.DatasBean> datas = result.getDatas();
+            if (datas != null) {
+                dataList.addAll(datas);
+                if (adapter == null) {
+                    adapter = new FavoriteAdapter(R.layout.item_home_article, dataList);
+                    adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            gotoWebViewActivity(dataList.get(position));
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    adapter.setNewData(dataList);
                 }
-            });
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter.setNewData(dataList);
+            } else {
+                refreshLayout.setNoMoreData(true);
+            }
         }
     }
 

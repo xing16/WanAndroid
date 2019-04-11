@@ -7,9 +7,14 @@ package com.xing.commonbase.base;
 
 public class BaseResponse<T> {
 
-    private int errorCode = 0;
+    private int errorCode = -1;
     private String errorMsg;
     private T data;
+    /**
+     * 兼容 gank api
+     */
+    private T results;
+    private boolean error = true;
 
     public int getErrorCode() {
         return errorCode;
@@ -36,7 +41,19 @@ public class BaseResponse<T> {
     }
 
     public boolean isError() {
-        return errorCode != 0 && errorCode != 200;
+        return error;
+    }
+
+    public T getResults() {
+        return results;
+    }
+
+    public void setResults(T results) {
+        this.results = results;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
     }
 
     @Override

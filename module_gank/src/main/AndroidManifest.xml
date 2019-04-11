@@ -3,7 +3,11 @@
     package="com.xing.module.gank">
 
     <application>
-        <activity android:name=".activity.MeiziActivity"></activity>
+        <activity
+            android:name=".activity.MeiziActivity"
+            android:exported="false">
+
+        </activity>
     </application>
 
 </manifest>

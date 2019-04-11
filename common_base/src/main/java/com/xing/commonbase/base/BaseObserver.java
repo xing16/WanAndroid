@@ -27,14 +27,19 @@ public abstract class BaseObserver<T> extends DisposableObserver<BaseResponse<T>
 
     @Override
     public void onNext(BaseResponse<T> baseResponse) {
+        if (baseView != null) {
+            baseView.hideLoading();
+        }
         int errcode = baseResponse.getErrorCode();
         String errmsg = baseResponse.getErrorMsg();
-        if (errcode == 0 || errcode == 200) {
-            if (baseView != null) {
-                baseView.hideLoading();
-            }
+        // 兼容 gank api
+        boolean isOk = !baseResponse.isError();
+        if (errcode == 0 || errcode == 200) {   // wanandroid api
             T data = baseResponse.getData();
             // 将服务端获取到的正常数据传递给上层调用方
+            onSuccess(data);
+        } else if (isOk) {   // gank api
+            T data = baseResponse.getResults();
             onSuccess(data);
         } else {
             onError(new ApiException(errcode, errmsg));
@@ -55,10 +60,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<BaseResponse<T>
      */
     @Override
     public void onError(Throwable e) {
-        // 隐藏 loading
-        if (baseView != null) {
-            baseView.hideLoading();
-        }
         ExceptionHandler.handleException(e);
     }
 

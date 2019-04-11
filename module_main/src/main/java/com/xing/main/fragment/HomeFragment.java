@@ -292,23 +292,28 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
     public void onHomeArticles(HomeArticleResult result) {
         refreshLayout.finishLoadMore();
         page++;
-        if (result == null) {
-            return;
-        }
-        dataList.addAll(result.getDatas());
-        if (homeArticleAdapter == null) {
-            homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article, dataList);
-            homeArticleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position));
+        if (result != null) {
+            List<HomeArticleResult.DatasBean> datas = result.getDatas();
+            if (datas != null) {
+                dataList.addAll(result.getDatas());
+                if (homeArticleAdapter == null) {
+                    homeArticleAdapter = new HomeArticleAdapter(R.layout.item_home_article, dataList);
+                    homeArticleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            gotoWebViewActivity(dataList.get(position));
+                        }
+                    });
+                    homeArticleAdapter.addHeaderView(headerView);
+                    recyclerView.setAdapter(homeArticleAdapter);
+                } else {
+                    homeArticleAdapter.setNewData(dataList);
                 }
-            });
-            homeArticleAdapter.addHeaderView(headerView);
-            recyclerView.setAdapter(homeArticleAdapter);
-        } else {
-            homeArticleAdapter.setNewData(dataList);
+            } else {
+                refreshLayout.setNoMoreData(true);
+            }
         }
+
     }
 
     private void gotoWebViewActivity(HomeArticleResult.DatasBean datasBean) {

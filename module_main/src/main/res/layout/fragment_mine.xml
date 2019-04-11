@@ -95,6 +95,7 @@
                 app:leftIcon="@drawable/ic_mine_favorite" />
 
             <com.xing.commonbase.widget.ItemView
+                android:id="@+id/iv_mine_meizi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:itemTitle="轻松一刻"

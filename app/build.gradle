@@ -35,6 +35,7 @@ dependencies {
     if (!isRunAlone.toBoolean()) {
         implementation project(':module_usercenter')
         implementation project(':module_main')
+        implementation project(':module_gank')
     }
     // 如果 app 主工程中使用了 Arouter 注解，那就需要这个 annotationProcessor
     annotationProcessor rootProject.ext.dependencies['arouter-compiler']

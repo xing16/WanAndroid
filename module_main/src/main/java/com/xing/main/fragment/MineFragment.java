@@ -21,6 +21,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View avatarLayout;
     private TextView meiziView;
     private ItemView favoriteItemView;
+    private ItemView meiziItemView;
     private ItemView aboutItemView;
 
     public MineFragment() {
@@ -37,6 +38,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         scrollView = rootView.findViewById(R.id.sv_scroll);
 //        avatarLayout = rootView.findViewById(R.id.rl_layout);
         favoriteItemView = rootView.findViewById(R.id.iv_mine_favorite);
+        meiziItemView = rootView.findViewById(R.id.iv_mine_meizi);
         aboutItemView = rootView.findViewById(R.id.iv_mine_about);
     }
 
@@ -48,7 +50,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
 
         favoriteItemView.setOnClickListener(this);
+        meiziItemView.setOnClickListener(this);
         aboutItemView.setOnClickListener(this);
+
 
     }
 
@@ -68,18 +72,26 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             gotoAboutActivity();
         } else if (v.getId() == R.id.iv_mine_favorite) {
             gotoFavoriteActivity();
+        } else if (v.getId() == R.id.iv_mine_meizi) {
+            gotoMeiziActivity();
         }
+    }
+
+    private void gotoMeiziActivity() {
+        ARouter.getInstance()
+                .build("/gank/MeiziActivity")
+                .navigation();
     }
 
     private void gotoFavoriteActivity() {
         ARouter.getInstance()
-                .build("/favorite/FavoriteActivity")
+                .build("/main/FavoriteActivity")
                 .navigation();
     }
 
     private void gotoAboutActivity() {
         ARouter.getInstance()
-                .build("/about/AboutActivity")
+                .build("/main/AboutActivity")
                 .navigation();
     }
 }
