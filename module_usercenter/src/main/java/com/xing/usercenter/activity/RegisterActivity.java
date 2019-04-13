@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseMVPActivity;
+import com.xing.commonbase.util.ToastUtil;
 import com.xing.module.usercenter.R;
 import com.xing.usercenter.bean.RegisterResult;
 import com.xing.usercenter.contract.RegisterContract;
@@ -60,20 +61,20 @@ public class RegisterActivity extends BaseMVPActivity<RegisterPresenter>
                 String password = passwordEditText.getText().toString().trim();
                 String repassword = repasswordEditText.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(mContext, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(mContext, "请输入用户名");
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(mContext, "请输入密码", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(mContext, "请输入密码");
                     return;
                 }
                 if (TextUtils.isEmpty(repassword)) {
-                    Toast.makeText(mContext, "请再次输入密码", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(mContext, "请再次输入密码");
                     return;
                 }
 
                 if (!TextUtils.equals(password, repassword)) {
-                    Toast.makeText(mContext, "两次密码不相同", Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(mContext, "两次密码不相同");
                     return;
                 }
                 presenter.register(username, password, repassword);

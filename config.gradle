@@ -42,6 +42,10 @@ ext {
             "banner"                 : "com.youth.banner:banner:1.4.10",
             "greendao"               : "org.greenrobot:greendao:3.2.2",
             "retrofit-cookie"        : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
-            "smart-refreshlayout"    : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21"
+            "smart-refreshlayout"    : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21",
+            "photoview"              : "com.github.chrisbanes:PhotoView:2.0.0",
+            "andpermission"          : "com.yanzhenjie.permission:support:2.0.1",
+            "eventbus"               : "org.greenrobot:eventbus:3.1.1",
+            "aspectj"                : "org.aspectj:aspectjrt:1.8.9"
     ]
 }

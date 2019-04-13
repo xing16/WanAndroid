@@ -11,7 +11,7 @@ public class FavoritePresenter extends BasePresenter<FavoriteContract.View>
 
     @Override
     public void getFavoriteList(int page) {
-        addSubscribe(create(MainApiService.class).getFavoriteList(page), new BaseObserver<FavoriteResult>() {
+        addSubscribe(create(MainApiService.class).getFavoriteList(page), new BaseObserver<FavoriteResult>(getView()) {
 
             @Override
             protected void onSuccess(FavoriteResult data) {

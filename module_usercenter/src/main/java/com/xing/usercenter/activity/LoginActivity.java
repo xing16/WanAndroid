@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.constants.Constants;
+import com.xing.commonbase.manager.UserLoginManager;
 import com.xing.commonbase.util.SoftKeyboardUtil;
 import com.xing.module.usercenter.R;
 import com.xing.usercenter.bean.LoginResult;
@@ -125,6 +126,7 @@ public class LoginActivity extends BaseMVPActivity<LoginPresenter>
 
     @Override
     public void loginSuccess(LoginResult result) {
+        UserLoginManager.getInstance().setLoggedin(true);
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         presenter.saveUsernamePassword(username, password);

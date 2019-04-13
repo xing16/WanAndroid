@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">module_main</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_article">搜索文章</string>
+    <string name="add_favorite_success">添加收藏成功</string>
+    <string name="delete_favorite_success">删除收藏成功</string>
 </resources>

@@ -95,7 +95,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         headerView = LayoutInflater.from(mContext).inflate(R.layout.layout_home_header, null);
         banner = headerView.findViewById(R.id.banner_home);
         gridViewPager = headerView.findViewById(R.id.gvp_viewpager);
-
     }
 
     @Override
@@ -144,7 +143,9 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-
+                if (searchLayoutView.getVisibility() == View.VISIBLE) {
+                    searchLayoutView.setVisibility(View.INVISIBLE);
+                }
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -166,8 +167,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         }
         int maxOffset = bannerHeight - StatusBarUtil.getStatusBarHeight(mContext) - searchLayoutHeight;
         Log.e(TAG, "offset: " + offset + ", maxOffset = " + maxOffset);
-
-
         if (offset <= maxOffset) {
             float percent = offset * 1.0f / maxOffset;
             searchLayoutView.getBackground().mutate().setAlpha((int) (255 * percent));
@@ -200,7 +199,7 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.finishLoadMore();
     }
 
     /**
@@ -290,7 +289,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
      */
     @Override
     public void onHomeArticles(HomeArticleResult result) {
-        refreshLayout.finishLoadMore();
         page++;
         if (result != null) {
             List<HomeArticleResult.DatasBean> datas = result.getDatas();

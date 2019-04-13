@@ -3,15 +3,14 @@ package com.xing.commonbase.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.xing.commonbase.annotation.BindEventBus;
 import com.xing.commonbase.mvp.IPresenter;
 import com.xing.commonbase.mvp.IView;
+import com.xing.commonbase.util.EventBusHelper;
 
-public abstract class BaseMVPFragment<P extends IPresenter> extends Fragment implements IView {
+public abstract class BaseMVPFragment<P extends IPresenter> extends BaseFragment implements IView {
 
     protected Context mContext;
     protected P presenter;
@@ -19,6 +18,10 @@ public abstract class BaseMVPFragment<P extends IPresenter> extends Fragment imp
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = createPresenter();
+        if (presenter != null) {
+            presenter.attachView(this);
+        }
     }
 
     @Override
@@ -34,18 +37,15 @@ public abstract class BaseMVPFragment<P extends IPresenter> extends Fragment imp
     }
 
 
-    @Override
-    public final View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                   Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayoutResId(), container, false);
-        presenter = createPresenter();
-        if (presenter != null) {
-            presenter.attachView(this);
-        }
-        initView(rootView);
-        initData();
-        return rootView;
-    }
+//    @Override
+//    public final View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                                   Bundle savedInstanceState) {
+//        View rootView = inflater.inflate(getLayoutResId(), container, false);
+//
+//        initView(rootView);
+//        initData();
+//        return rootView;
+//    }
 
     protected abstract P createPresenter();
 
@@ -66,6 +66,9 @@ public abstract class BaseMVPFragment<P extends IPresenter> extends Fragment imp
         if (presenter != null) {
             presenter.detachView();
             presenter = null;
+        }
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBusHelper.unregister(this);
         }
     }
 }

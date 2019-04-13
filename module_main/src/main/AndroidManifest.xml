@@ -3,7 +3,9 @@
     package="com.xing.main">
 
     <application>
-        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.SearchActivity" />
         <activity
             android:name=".activity.WebViewActivity"
@@ -11,7 +13,9 @@
         <activity android:name=".activity.WeChatArticleListActivity" />
         <activity android:name=".activity.SystemArticleActivity" />
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.FavoriteActivity"></activity>
+        <activity android:name=".activity.FavoriteActivity">
+
+        </activity>
     </application>
 
 </manifest>

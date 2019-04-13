@@ -10,13 +10,14 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.constants.Constants;
+import com.xing.commonbase.util.ToastUtil;
 import com.xing.commonbase.widget.ProgressWebView;
 import com.xing.main.R;
+import com.xing.main.annotation.UserLoginTrace;
 import com.xing.main.contract.WebContract;
 import com.xing.main.presenter.WebPresenter;
 
@@ -141,6 +142,7 @@ public class WebViewActivity extends BaseMVPActivity<WebPresenter> implements We
         return true;
     }
 
+    @UserLoginTrace(value = 0)
     private void addArticleFavorite() {
         presenter.addArticleFavorite(id, title, author, url);
     }
@@ -167,13 +169,13 @@ public class WebViewActivity extends BaseMVPActivity<WebPresenter> implements We
     @Override
     public void onFavoriteAdded() {
         hadFavorited = true;
-        Toast.makeText(mContext, "Add Favorite Success", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(mContext, R.string.add_favorite_success);
     }
 
     @Override
     public void onFavoriteDeleted() {
         hadFavorited = false;
-        Toast.makeText(mContext, "Delete Favorite Success", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(mContext, R.string.delete_favorite_success);
     }
 
     @Override

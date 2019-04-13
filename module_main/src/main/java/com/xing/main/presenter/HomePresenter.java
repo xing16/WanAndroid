@@ -18,7 +18,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
      */
     @Override
     public void getBanner() {
-        addSubscribe(create(MainApiService.class).getBanner(), new BaseObserver<List<BannerResult>>() {
+        addSubscribe(create(MainApiService.class).getBanner(), new BaseObserver<List<BannerResult>>(getView()) {
             @Override
             protected void onSuccess(List<BannerResult> data) {
                 if (isViewAttached()) {

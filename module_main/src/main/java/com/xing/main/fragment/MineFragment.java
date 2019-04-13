@@ -13,6 +13,7 @@ import com.xing.commonbase.util.BlurUtil;
 import com.xing.commonbase.widget.ItemView;
 import com.xing.commonbase.widget.ZoomScrollView;
 import com.xing.main.R;
+import com.xing.main.annotation.UserLoginTrace;
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
@@ -79,10 +80,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private void gotoMeiziActivity() {
         ARouter.getInstance()
-                .build("/gank/MeiziActivity")
+                .build("/gank/ImageMeiziActivity")
                 .navigation();
     }
 
+    @UserLoginTrace(value = 0)
     private void gotoFavoriteActivity() {
         ARouter.getInstance()
                 .build("/main/FavoriteActivity")

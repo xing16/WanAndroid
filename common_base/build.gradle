@@ -61,4 +61,9 @@ dependencies {
     api rootProject.ext.dependencies['greendao']
     api rootProject.ext.dependencies['retrofit-cookie']
     api rootProject.ext.dependencies['smart-refreshlayout']
+    api rootProject.ext.dependencies['photoview']
+    api rootProject.ext.dependencies['andpermission']
+    api rootProject.ext.dependencies['eventbus']
+    api rootProject.ext.dependencies['aspectj']
+
 }

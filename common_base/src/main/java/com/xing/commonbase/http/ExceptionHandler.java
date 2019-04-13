@@ -64,7 +64,7 @@ public class ExceptionHandler {
         } else if (e instanceof java.net.SocketTimeoutException) {
             errmsg = "连接超时";
         } else {
-            errmsg = "未知错误";
+            errmsg = "网络连接异常,请稍后重试";
         }
         Toast.makeText(BaseApplication.getApplication(), errmsg, Toast.LENGTH_LONG).show();
     }
@@ -77,7 +77,7 @@ public class ExceptionHandler {
     private static void handleServerException(int errcode) {
         switch (errcode) {
             case -1001:
-                gotoLoginActivity();
+//                gotoLoginActivity();
                 break;
             default:
                 break;

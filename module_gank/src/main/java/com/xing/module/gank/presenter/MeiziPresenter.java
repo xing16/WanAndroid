@@ -13,7 +13,7 @@ public class MeiziPresenter extends BasePresenter<MeiziContract.View> implements
     @Override
     public void getMeiziList(int pageSize, int page) {
         addSubscribe(create(GankApiService.class).getMeiziList(pageSize, page),
-                new BaseObserver<List<MeiziResult>>() {
+                new BaseObserver<List<MeiziResult>>(getView()) {
 
                     @Override
                     protected void onSuccess(List<MeiziResult> data) {

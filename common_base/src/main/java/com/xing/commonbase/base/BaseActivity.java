@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
+import com.xing.commonbase.annotation.BindEventBus;
 import com.xing.commonbase.receiver.NetworkChangeReceiver;
+import com.xing.commonbase.util.EventBusHelper;
 import com.xing.commonbase.util.StatusBarUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -23,7 +25,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
         mContext = this;
         setStatusBarColor();
-
+        // 基类中注册 eventbus
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBusHelper.register(this);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
         }
@@ -63,6 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             receiver.onDestroy();
             receiver = null;
         }
+        // 取消注册
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBusHelper.unregister(this);
+        }
     }
 
     public void setStatusBarTextColor(Window window, boolean lightStatusBar) {
@@ -79,4 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         decor.setSystemUiVisibility(ui);
     }
+
+
 }

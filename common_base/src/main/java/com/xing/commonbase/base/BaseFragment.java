@@ -8,12 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xing.commonbase.annotation.BindEventBus;
+import com.xing.commonbase.util.EventBusHelper;
+
+import org.greenrobot.eventbus.EventBus;
+
 public abstract class BaseFragment extends Fragment {
     protected Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBusHelper.register(this);
+        }
     }
 
     @Override
@@ -51,5 +59,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

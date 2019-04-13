@@ -4,10 +4,11 @@
 
     <application>
         <activity
-            android:name=".activity.MeiziActivity"
-            android:exported="false">
-
-        </activity>
+            android:name=".activity.ImageMeiziActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ImagePreviewActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

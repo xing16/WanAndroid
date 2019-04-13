@@ -98,7 +98,7 @@
                 android:id="@+id/iv_mine_meizi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:itemTitle="轻松一刻"
+                app:itemTitle="@string/happy_a_minute"
                 app:leftIcon="@drawable/ic_mine_happy" />
 
             <com.xing.commonbase.widget.ItemView
