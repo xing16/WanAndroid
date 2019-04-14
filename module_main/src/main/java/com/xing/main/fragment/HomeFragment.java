@@ -143,9 +143,6 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                if (searchLayoutView.getVisibility() == View.VISIBLE) {
-                    searchLayoutView.setVisibility(View.INVISIBLE);
-                }
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
@@ -173,12 +170,15 @@ public class HomeFragment extends BaseMVPFragment<HomePresenter> implements Home
             loginTxtView.setTextColor(getResources().getColor(android.R.color.white));
             logoImgView.setImageResource(R.drawable.ic_home_logo_white);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input));
-            ((MainActivity) getActivity()).setStatusBarColor();
+            ((MainActivity) getActivity()).setStatusBarTranslucent((int) (255 * percent));
+//            ((MainActivity) getActivity()).setStatusBarTextColorBlack();
+
+
         } else {
             loginTxtView.setTextColor(getResources().getColor(R.color.colorAccent));
             logoImgView.setImageResource(R.drawable.ic_home_logo_black);
             searchTxtView.setBackground(getResources().getDrawable(R.drawable.shape_home_input_dark));
-            ((MainActivity) getActivity()).setStatusBarWhite();
+//            ((MainActivity) getActivity()).setStatusBarWhite();
         }
     }
 

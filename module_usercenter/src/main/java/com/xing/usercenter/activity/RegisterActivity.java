@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.util.ToastUtil;
-import com.xing.module.usercenter.R;
+import com.xing.usercenter.R;
 import com.xing.usercenter.bean.RegisterResult;
 import com.xing.usercenter.contract.RegisterContract;
 import com.xing.usercenter.presenter.RegisterPresenter;

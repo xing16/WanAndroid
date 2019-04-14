@@ -74,12 +74,22 @@ public class ZoomScrollView extends ScrollView {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            return true;
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (zoomViewWidth == 0 || zoomViewHeight == 0) {
             zoomViewWidth = zoomView.getMeasuredWidth();
             zoomViewHeight = zoomView.getMeasuredHeight();
         }
         switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                return true;
             case MotionEvent.ACTION_MOVE:
                 if (!scaling) {
                     if (getScrollY() == 0) {
@@ -92,7 +102,7 @@ public class ZoomScrollView extends ScrollView {
                 if (distance < 0) {   // 上拉
                     break;
                 }
-                if(distance > zoomMax) {
+                if (distance > zoomMax) {
                     break;
                 }
                 scaling = true;

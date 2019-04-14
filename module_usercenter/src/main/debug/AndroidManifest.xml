@@ -5,7 +5,7 @@
 
     <!--作为单独组件时，需要配置 application name 和程序入口-->
     <application
-        android:name="com.xing.usercenter.app.UserCenterApplication"
+        android:name="com.xing.commonbase.base.BaseApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,12 +17,15 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
     </application>
 

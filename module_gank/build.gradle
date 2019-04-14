@@ -26,12 +26,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            if (isRunAlone.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    // 全部 module 一起编译时剔除 debug 目录
+                    exclude '**/debug/**'
+                }
+            }
+        }
+    }
+
 }
 
 dependencies {
     implementation project(':common_base')
-    // butterknife-compiler
-    annotationProcessor rootProject.ext.dependencies['butterknife-compiler']
     // arouter-compiler
     annotationProcessor rootProject.ext.dependencies['arouter-compiler']
     annotationProcessor rootProject.ext.dependencies['glide-compiler']

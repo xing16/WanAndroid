@@ -11,7 +11,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
         //避免butterKnife在library中使用出现id冲突
-        classpath "com.jakewharton:butterknife-gradle-plugin:8.5.1"
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
         classpath 'org.aspectj:aspectjtools:1.8.9'
 

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -147,17 +148,12 @@ public class MainActivity extends BaseActivity {
         StatusBarUtil.setTransparentForImageViewInFragment(this, null);
     }
 
-    public void setStatusBarWhite() {
-
+    public void setStatusBarTranslucent(int alpha) {
+        StatusBarUtil.setTranslucentForImageViewInFragment(this, alpha, null);
     }
 
-    /**
-     * 设置状态栏透明度
-     *
-     * @param alpha
-     */
-    public void setStatusBarTranslute(int alpha) {
-        StatusBarUtil.setColor(this, Color.WHITE, alpha);
+    public void setStatusBarTextColorBlack() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//黑色
     }
 
 

@@ -594,7 +594,7 @@ public class StatusBarUtil {
             if (fakeTranslucentView.getVisibility() == View.GONE) {
                 fakeTranslucentView.setVisibility(View.VISIBLE);
             }
-            fakeTranslucentView.setBackgroundColor(Color.argb(statusBarAlpha, 0, 0, 0));
+            fakeTranslucentView.setBackgroundColor(Color.argb(statusBarAlpha, 255, 255, 255));
         } else {
             contentView.addView(createTranslucentStatusBarView(activity, statusBarAlpha));
         }

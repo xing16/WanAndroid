@@ -3,7 +3,6 @@ if (isRunAlone.toBoolean()) {
 } else {
     apply plugin: 'com.android.library'
 }
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -46,8 +45,6 @@ android {
 
 dependencies {
     implementation project(':common_base')
-    // butterknife-compiler
-    annotationProcessor rootProject.ext.dependencies['butterknife-compiler']
     // arouter-compiler
     annotationProcessor rootProject.ext.dependencies['arouter-compiler']
     annotationProcessor rootProject.ext.dependencies['glide-compiler']

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xing.module.usercenter">
+    package="com.xing.usercenter">
 
     <!--作为组件module被加载时，Manifest.xml中不能配置 application name -->
     <application>
@@ -17,8 +17,12 @@
 
         </activity>
 
-        <activity android:name="com.xing.usercenter.activity.LoginActivity" />
-        <activity android:name="com.xing.usercenter.activity.RegisterActivity" />
+        <activity
+            android:name="com.xing.usercenter.activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.xing.usercenter.activity.RegisterActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

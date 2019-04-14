@@ -20,7 +20,7 @@ import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.manager.UserLoginManager;
 import com.xing.commonbase.util.SoftKeyboardUtil;
-import com.xing.module.usercenter.R;
+import com.xing.usercenter.R;
 import com.xing.usercenter.bean.LoginResult;
 import com.xing.usercenter.contract.LoginContract;
 import com.xing.usercenter.presenter.LoginPresenter;
