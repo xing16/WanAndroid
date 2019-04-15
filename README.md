@@ -20,7 +20,9 @@
 - arouter
 
 ### APK 体验
-[点击下载安装](https://github.com/xing16/WanAndroid/raw/da1219ede8ec2ff164f36da6294a38488d2cbd45/app/release/app-release.apk)
+[点击下载安装](https://github.com/xing16/WanAndroid/raw/1b009f4c331ba40e57d6ac25e65f552a2a4c4223/app/release/app-release.apk)
+
+<img src="https://github.com/xing16/WanAndroid/raw/master/ScreenShot/qrcode.png" width="40%" >
 
 
 
