@@ -97,7 +97,6 @@ public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePres
 
     @Override
     public void onWeChatArticleList(WeChatArticleResult result) {
-        refreshLayout.finishLoadMore();
         page++;
         if (result != null) {
             List<WeChatArticleResult.DatasBean> datas = result.getDatas();
@@ -147,6 +146,6 @@ public class WeChatArticleListActivity extends BaseMVPActivity<WeChatArticlePres
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.finishLoadMore();
     }
 }

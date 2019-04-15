@@ -11,14 +11,15 @@ public class WeChatArticlePresenter extends BasePresenter<WeChatArticleListContr
 
     @Override
     public void getWeChatArticle(int id, int page) {
-        addSubscribe(create(MainApiService.class).getWeChatArticles(id, page), new BaseObserver<WeChatArticleResult>() {
+        addSubscribe(create(MainApiService.class).getWeChatArticles(id, page),
+                new BaseObserver<WeChatArticleResult>(getView()) {
 
-            @Override
-            protected void onSuccess(WeChatArticleResult data) {
-                if (isViewAttached()) {
-                    getView().onWeChatArticleList(data);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(WeChatArticleResult data) {
+                        if (isViewAttached()) {
+                            getView().onWeChatArticleList(data);
+                        }
+                    }
+                });
     }
 }

@@ -13,14 +13,15 @@ public class SystemPresenter extends BasePresenter<SystemContract.View>
 
     @Override
     public void getSystemList() {
-        addSubscribe(create(MainApiService.class).getSystemList(), new BaseObserver<List<SystemResult>>() {
+        addSubscribe(create(MainApiService.class).getSystemList(),
+                new BaseObserver<List<SystemResult>>(getView()) {
 
-            @Override
-            protected void onSuccess(List<SystemResult> data) {
-                if (isViewAttached()) {
-                    getView().onSystemList(data);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(List<SystemResult> data) {
+                        if (isViewAttached()) {
+                            getView().onSystemList(data);
+                        }
+                    }
+                });
     }
 }

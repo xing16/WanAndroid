@@ -3,12 +3,15 @@ package com.xing.main.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xing.commonbase.base.BaseMVPFragment;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
@@ -29,9 +32,10 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
 
     private RecyclerView recyclerView;
     private String keyword;
-    private int page;
+    private int page = 0;
     private List<SearchResult.DatasBean> dataList = new ArrayList<>();
     private SearchResultAdapter searchResultAdapter;
+    private RefreshLayout refreshLayout;
 
     public SearchResultFragment() {
     }
@@ -74,6 +78,7 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
 
     @Override
     protected void initView(View rootView) {
+        refreshLayout = rootView.findViewById(R.id.srl_search_result);
         recyclerView = rootView.findViewById(R.id.rv_search_result);
     }
 
@@ -91,6 +96,13 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
         recyclerView.addItemDecoration(itemDecoration);
         // 请求搜索结果
         presenter.getSearchResult(page, keyword);
+
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                presenter.getSearchResult(page, keyword);
+            }
+        });
     }
 
     @Override
@@ -100,26 +112,26 @@ public class SearchResultFragment extends BaseMVPFragment<SearchResultPresenter>
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.finishLoadMore();
     }
 
     @Override
     public void onSearchResult(SearchResult searchResults) {
-        if (searchResults == null || searchResults.getDatas() == null) {
-            return;
-        }
-        dataList.addAll(searchResults.getDatas());
-        if (searchResultAdapter == null) {
-            searchResultAdapter = new SearchResultAdapter(R.layout.item_search_result, dataList);
-            searchResultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position));
-                }
-            });
-            recyclerView.setAdapter(searchResultAdapter);
-        } else {
-            searchResultAdapter.setNewData(dataList);
+        page++;
+        if (searchResults != null) {
+            dataList.addAll(searchResults.getDatas());
+            if (searchResultAdapter == null) {
+                searchResultAdapter = new SearchResultAdapter(R.layout.item_search_result, dataList);
+                searchResultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        gotoWebViewActivity(dataList.get(position));
+                    }
+                });
+                recyclerView.setAdapter(searchResultAdapter);
+            } else {
+                searchResultAdapter.setNewData(dataList);
+            }
         }
     }
 

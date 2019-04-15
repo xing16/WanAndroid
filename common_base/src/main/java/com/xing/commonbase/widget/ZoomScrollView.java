@@ -74,14 +74,6 @@ public class ZoomScrollView extends ScrollView {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-            return true;
-        }
-        return super.onInterceptTouchEvent(ev);
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (zoomViewWidth == 0 || zoomViewHeight == 0) {
             zoomViewWidth = zoomView.getMeasuredWidth();

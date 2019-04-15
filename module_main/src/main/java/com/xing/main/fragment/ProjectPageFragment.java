@@ -2,6 +2,7 @@ package com.xing.main.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xing.commonbase.base.BaseLazyFragment;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
@@ -49,7 +51,7 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 
     @Override
     protected void loadData() {
-        presenter.getData(id, page);
+        presenter.getProjects(id, page);
     }
 
     @Override
@@ -79,6 +81,12 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                presenter.getProjects(id, page);
+            }
+        });
 
     }
 
@@ -89,12 +97,11 @@ public class ProjectPageFragment extends BaseLazyFragment<ProjectPagePresenter> 
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.finishLoadMore();
     }
 
     @Override
     public void onProjectList(ProjectResult projectResult) {
-        refreshLayout.finishLoadMore();
         page++;
         if (projectResult != null) {
             List<ProjectResult.DatasBean> datas = projectResult.getDatas();

@@ -10,6 +10,6 @@ public interface ProjectPageContract {
     }
 
     interface Presenter {
-        void getData(int id, int page);
+        void getProjects(int id, int page);
     }
 }

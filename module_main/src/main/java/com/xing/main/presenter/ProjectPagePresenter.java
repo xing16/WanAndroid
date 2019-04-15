@@ -10,15 +10,16 @@ public class ProjectPagePresenter extends BasePresenter<ProjectPageContract.View
         implements ProjectPageContract.Presenter {
 
     @Override
-    public void getData(int id, int page) {
-        addSubscribe(create(MainApiService.class).getProjects(page, id), new BaseObserver<ProjectResult>() {
+    public void getProjects(int id, int page) {
+        addSubscribe(create(MainApiService.class).getProjects(page, id),
+                new BaseObserver<ProjectResult>(getView()) {
 
-            @Override
-            protected void onSuccess(ProjectResult data) {
-                if (isViewAttached()) {
-                    getView().onProjectList(data);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(ProjectResult data) {
+                        if (isViewAttached()) {
+                            getView().onProjectList(data);
+                        }
+                    }
+                });
     }
 }

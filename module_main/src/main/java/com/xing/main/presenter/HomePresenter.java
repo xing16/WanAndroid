@@ -47,7 +47,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
      */
     @Override
     public void getHomeArticles(int page) {
-        addSubscribe(create(MainApiService.class).getHomeArticles(page), new BaseObserver<HomeArticleResult>() {
+        addSubscribe(create(MainApiService.class).getHomeArticles(page), new BaseObserver<HomeArticleResult>(getView()) {
             @Override
             protected void onSuccess(HomeArticleResult data) {
                 if (isViewAttached()) {

@@ -1,6 +1,7 @@
 package com.xing.main.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,8 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xing.commonbase.base.BaseMVPActivity;
 import com.xing.commonbase.constants.Constants;
 import com.xing.commonbase.widget.LinearItemDecoration;
@@ -31,6 +34,7 @@ public class SystemArticleActivity extends BaseMVPActivity<SystemArticlePresente
     private SystemArticleAdapter adapter;
     private int id = 0;
     private int page = 0;
+    private RefreshLayout refreshLayout;
 
     @Override
     protected int getLayoutResId() {
@@ -48,6 +52,7 @@ public class SystemArticleActivity extends BaseMVPActivity<SystemArticlePresente
                 finish();
             }
         });
+        refreshLayout = findViewById(R.id.srf_system_article);
         recyclerView = findViewById(R.id.rv_system_article);
     }
 
@@ -71,6 +76,12 @@ public class SystemArticleActivity extends BaseMVPActivity<SystemArticlePresente
         recyclerView.addItemDecoration(itemDecoration);
 
         presenter.getSystemArticleList(page, id);
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                presenter.getSystemArticleList(page, id);
+            }
+        });
     }
 
     @Override
@@ -80,21 +91,21 @@ public class SystemArticleActivity extends BaseMVPActivity<SystemArticlePresente
 
     @Override
     public void onSystemArticleList(SystemArticleResult result) {
-        if (result == null) {
-            return;
-        }
-        dataList.addAll(result.getDatas());
-        if (adapter == null) {
-            adapter = new SystemArticleAdapter(R.layout.item_home_article, dataList);
-            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    gotoWebViewActivity(dataList.get(position));
-                }
-            });
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter.setNewData(dataList);
+        page++;
+        if (result != null) {
+            dataList.addAll(result.getDatas());
+            if (adapter == null) {
+                adapter = new SystemArticleAdapter(R.layout.item_home_article, dataList);
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        gotoWebViewActivity(dataList.get(position));
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.setNewData(dataList);
+            }
         }
     }
 
@@ -126,6 +137,6 @@ public class SystemArticleActivity extends BaseMVPActivity<SystemArticlePresente
 
     @Override
     public void hideLoading() {
-
+        refreshLayout.finishLoadMore();
     }
 }

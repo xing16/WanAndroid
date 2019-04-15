@@ -62,15 +62,16 @@ public class SearchResultPresenter extends BasePresenter<SearchResultContract.Vi
 
     @Override
     public void getSearchResult(int page, String keyword) {
-        addSubscribe(create(MainApiService.class).getSearchResult(page, keyword), new BaseObserver<SearchResult>() {
+        addSubscribe(create(MainApiService.class).getSearchResult(page, keyword),
+                new BaseObserver<SearchResult>(getView()) {
 
-            @Override
-            protected void onSuccess(SearchResult data) {
-                if (isViewAttached()) {
-                    getView().onSearchResult(data);
-                }
-            }
-        });
+                    @Override
+                    protected void onSuccess(SearchResult data) {
+                        if (isViewAttached()) {
+                            getView().onSearchResult(data);
+                        }
+                    }
+                });
     }
 
 

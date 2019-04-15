@@ -12,7 +12,7 @@ public class SystemArticlePresenter extends BasePresenter<SystemArticleContract.
     @Override
     public void getSystemArticleList(int page, int id) {
         addSubscribe(create(MainApiService.class).getSystemArticles(page, id),
-                new BaseObserver<SystemArticleResult>() {
+                new BaseObserver<SystemArticleResult>(getView()) {
 
                     @Override
                     protected void onSuccess(SystemArticleResult data) {

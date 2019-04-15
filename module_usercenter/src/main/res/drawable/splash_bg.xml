@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@android:color/white" />
+    <item
+        android:height="80dp"
+        android:gravity="center_horizontal"
+        android:top="200dp">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/splash_water" />
+    </item>
+
+    <item
+        android:gravity="center_horizontal"
+        android:top="100dp">
+        <bitmap
+            android:gravity="center_horizontal"
+            android:src="@drawable/splash_tip" />
+    </item>
+
+
+</layer-list>
