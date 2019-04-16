@@ -54,7 +54,7 @@ public class WebViewActivity extends BaseMVPActivity<WebPresenter> implements We
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                handleWebViewBack();
             }
         });
 
@@ -104,6 +104,14 @@ public class WebViewActivity extends BaseMVPActivity<WebPresenter> implements We
 
             }
         });
+    }
+
+    private void handleWebViewBack() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            finish();
+        }
     }
 
     @Override

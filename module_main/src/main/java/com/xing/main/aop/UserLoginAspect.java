@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.xing.commonbase.base.BaseApplication;
 import com.xing.commonbase.manager.UserLoginManager;
 import com.xing.commonbase.util.ToastUtil;
 import com.xing.main.annotation.UserLoginTrace;
@@ -40,6 +41,7 @@ public class UserLoginAspect {
     @Around("loginPointcut()")
     public void handleLoginPointcut(ProceedingJoinPoint joinPoint) throws Throwable {
         Log.e(TAG, "handleLoginPointcut: ======== ");
+        ToastUtil.show(BaseApplication.getApplication(), "joinpoint");
         // 已经登录，执行原来逻辑
         if (UserLoginManager.getInstance().isLoggedin()) {
             joinPoint.proceed();

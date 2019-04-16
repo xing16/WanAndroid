@@ -16,7 +16,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="80dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@mipmap/ic_launcher" />
 
     <EditText
         android:layout_width="match_parent"
