@@ -66,10 +66,10 @@ if (isRunAlone.toBoolean()) {
     variants = project.android.libraryVariants
 }
 variants.all { variant ->
-    if (!variant.buildType.isDebuggable()) {
-        log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
-        return
-    }
+//    if (!variant.buildType.isDebuggable()) {
+//        log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
+//        return
+//    }
 
     JavaCompile javaCompile = variant.javaCompile//警告：studio 3.3过时了
 //    def javaCompile = variant.getJavaCompileProvider()//还会引起其它异常
